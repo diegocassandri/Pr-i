@@ -113,9 +113,9 @@
 				</div>
 			</div>
 		</form> -->
-
+		<div class="row">
 		<div id="custom-search-input">
-
+			
 			<div class="input-group col-md-12">
 
 				<input type="text" class="filterinput search-query form-control"
@@ -124,7 +124,7 @@
 			</div>
 
 		</div>
-
+		
 		<br> <br>
 
 
@@ -144,8 +144,8 @@
 			<div class="panel-body">
 				<ul class="list-group" id="list">
 					<li class="list-group-item" th:each="conexao : ${conexoes}">
-						<div class="row toggle" id="dropdown-detail-${conexao.codigo}"
-							data-toggle="detail-${conexao.codigo}">
+						<div class="row toggle" id="dropdown-detail-151"
+							data-toggle="detail-151">
 
 							<div class="col-xs-10">
 								<a href="/" th:text="${conexao.cliente.nome}"></a>
@@ -155,7 +155,7 @@
 							</div>
 
 						</div>
-						<div id="detail-${conexao.codigo}" style="display: none;">
+						<div id="detail-151" style="display: none;">
 							<hr>
 							<!-- <div class="container">-->
 
