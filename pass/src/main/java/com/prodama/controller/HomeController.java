@@ -7,9 +7,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController {
 	
-	@RequestMapping("/dashborad")
+	@RequestMapping("/senhas")
 	public ModelAndView dashboard() {
-		ModelAndView mv = new ModelAndView("Dashboard");
+		ModelAndView mv = new ModelAndView("senhas");
 		return mv;
 	}
 

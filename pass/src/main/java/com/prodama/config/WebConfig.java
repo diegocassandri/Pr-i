@@ -38,7 +38,7 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 	
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addRedirectViewController("/", "/dashborad");
+		registry.addRedirectViewController("/", "/senhas");
 	}
 	
 

@@ -11,10 +11,10 @@ public class SegurancaController {
 	@RequestMapping("/login")
 	public String login(@AuthenticationPrincipal User user) {
 		if (user != null) {
-			return "redirect:/dashborad";
+			return "redirect:/senhas";
 		}
 		
-		return "Login";
+		return "login";
 	}
 	
 }

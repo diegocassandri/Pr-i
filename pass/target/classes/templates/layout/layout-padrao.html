@@ -8,16 +8,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<title>AlgaWorks</title>
+<title>PASS Prodama</title>
 
-<link rel="stylesheet" type="text/css"
-	th:href="@{/layout/stylesheets/vendors.min.css}" />
-<link rel="stylesheet" type="text/css"
-	th:href="@{/layout/stylesheets/algaworks.min.css}" />
-<link rel="stylesheet" type="text/css"
-	th:href="@{/layout/stylesheets/application.css}" />
-<link rel="stylesheet" type="text/css"
-	th:href="@{/stylesheets/bootstrap-datepicker.standalone.min.css}" />
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet"
+	th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" />
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,68 +26,79 @@
 
 	<div class="aw-layout-page">
 
-		<nav
-			class="navbar  navbar-fixed-top  navbar-inverse  js-sticky-reference"
-			id="main-navbar">
+		<nav class="navbar  navbar-fixed-top  navbar-inverse" id="main-navbar">
 			<div class="container-fluid">
 
 				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+						aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
 					<a class="navbar-brand  hidden-xs" th:href="@{/}"> <i
-						class="fa fa-google-wallet" aria-hidden="true"></i>
+						class="fa fa-google-wallet" aria-hidden="true"> PRODAMA</i>
 					</a>
-
-					<ul class="nav  navbar-nav">
-						<li><a href="#" class="js-sidebar-toggle"><i
-								class="fa  fa-bars"></i></a></li>
-					</ul>
 				</div>
 
-				<ul class="nav navbar-nav  navbar-right">
-					<li>
-						<p class="navbar-text" th:text="${#authentication.name}"></p>
-					</li>
-					<li><a th:href="@{/logout}"><em class="fa  fa-sign-out"></em></a>
-					</li>
-				</ul>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse"
+					id="bs-example-navbar-collapse-1">
+					
+					<ul class="nav navbar-nav">
+						<li><a th:href="@{/}">Senhas</a></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false">Cadastros <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a th:href="@{/clientes}">Cliente</a></li>
+								<li><a href="#">Conexão</a></li>
+								<li><a th:href="@{/tipoConexao}">Tipo de Conexão</a></li>
+								<li><a th:href="@{/tipoRede}">Tipo de Rede</a></li>
+							</ul></li>
+					</ul>
 
+
+
+					<!-- /.navbar-collapse -->
+
+
+					<ul class="nav navbar-nav  navbar-right">
+						<li>
+							<p class="navbar-text" th:text="${#authentication.name}"></p>
+						</li>
+						<li><a th:href="@{/logout}"><em class="fa  fa-sign-out"></em></a>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</nav>
 
-		<header layout:insert="~{layout/BarraLateral}"></header>
 
 
 
-		<section class="aw-layout-content  js-content"
-			layout:fragment="conteudo"></section>
+		<section class="container-fluid" layout:fragment="conteudo"></section>
 
-		<footer class="aw-layout-footer  js-content">
+		<footer class="container-fluid aw-layout-footer  js-content">
 			<div class="container-fluid">
-				<span class="aw-footer-disclaimer">&copy; --- </span>
+				
 			</div>
 		</footer>
 
 	</div>
 
-	<script th:src="@{/layout/javascripts/vendors.min.js}"></script>
-	<script th:src="@{/layout/javascripts/algaworks.min.js}"></script>
 
-	
-	    <script th:src="@{/javascripts/cobranca.js}"></script>
-	<script th:src="@{/javascripts/vendors/jquery.masknumber.min.js}"></script>
-	<script th:src="@{/javascripts/jquery.maskMoney.min.js}"></script>
-	<script th:src="@{/javascripts/bootstrap-datepicker.min.js}"></script>
-	<script th:src="@{/javascripts/bootstrap-datepicker.pt-BR.min.js}"></script>
-	
-	
-    
-	
-	
-	<script>
-		$('.js-moeda').maskNumber({
-			decimal : ',',
-			thousands : '.'
-		});
-	</script>
+		<script type="text/javascript"
+		th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+
+
+
+
+
 	<th:block layout:fragment="javascript-extra"></th:block>
 
 </body>
