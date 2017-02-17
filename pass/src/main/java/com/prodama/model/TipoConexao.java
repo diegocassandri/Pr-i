@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
+import javax.persistence.FetchType;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -15,6 +18,10 @@ public class TipoConexao {
 	
 	@NotBlank
 	private String nome;
+	
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tipoConexao")
+	private List<Conexao> listaConexao;
 
 	public Long getCodigo() {
 		return codigo;

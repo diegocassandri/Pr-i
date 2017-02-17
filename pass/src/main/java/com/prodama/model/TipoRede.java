@@ -3,8 +3,10 @@ package com.prodama.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.OneToMany;
 import javax.persistence.Id;
-
+import java.util.List;
+import javax.persistence.FetchType;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
@@ -15,6 +17,9 @@ public class TipoRede {
 	
 	@NotBlank
 	private String nome;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "tipoConexao")
+	private List<Conexao> listaConexao;
 
 	public Long getCodigo() {
 		return codigo;

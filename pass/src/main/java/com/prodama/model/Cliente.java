@@ -1,20 +1,34 @@
 package com.prodama.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.OneToMany;
+import java.util.List;
+import javax.persistence.FetchType;
 import org.hibernate.validator.constraints.NotBlank;
 
+
 @Entity
-public class Cliente {
+public class Cliente  implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 	
 	@NotBlank
 	private String nome;
+	
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente")
+	private List<Conexao> listaConexoes;
+	
+
 
 	public Long getCodigo() {
 		return codigo;

@@ -7,11 +7,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 
 
 
@@ -20,6 +23,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	@Autowired
+    private DefaultSpringSecurityContextSource source;
 
 
 	
@@ -28,6 +34,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		/*auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder())*/;
 		auth.inMemoryAuthentication()
 		.withUser("prodama").password("prodama").roles("ADMIN");
+		 auth.ldapAuthentication().contextSource(source)
+         .userSearchBase("dc=users,dc=ldap")
+         .userDnPatterns("cn={0},dc=users")
+         .groupSearchBase("ou=groups")
+         ;   
 	}
 	
 
@@ -69,11 +80,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 			.sessionManagement()
 				.invalidSessionUrl("/login");
+		
+
 	}
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	
+	
 
 }
