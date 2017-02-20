@@ -2,14 +2,20 @@ package com.prodama.model;
 
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
@@ -60,7 +66,15 @@ public class Conexao  implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private SimNao permissao;
 	
+	
 	private String observacao;
+	
+	
+	
+	@ManyToMany(cascade=CascadeType.MERGE,fetch=FetchType.EAGER)
+	@JoinTable(name = "conexao_sistema", joinColumns = @JoinColumn(name = "codigo_conexao"), inverseJoinColumns = @JoinColumn(name = "codigo_sistema"))
+	private List<Sistema> sistemas = new LinkedList<Sistema>();
+	
 
 	public Long getCodigo() {
 		return codigo;
@@ -180,6 +194,14 @@ public class Conexao  implements Serializable{
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
+	}
+
+	public List<Sistema> getSistemas() {
+		return sistemas;
+	}
+
+	public void setSistemas(List<Sistema> sistemas) {
+		this.sistemas = sistemas;
 	}
 	
 

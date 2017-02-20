@@ -1,7 +1,7 @@
 package com.prodama.controller;
 
 
-import java.util.Optional;
+
 
 import javax.validation.Valid;
 
@@ -21,6 +21,7 @@ import com.prodama.model.Conexao;
 import com.prodama.model.SimNao;
 import com.prodama.repository.Clientes;
 import com.prodama.repository.Conexoes;
+import com.prodama.repository.Sistemas;
 import com.prodama.repository.TipoConexoes;
 import com.prodama.repository.TipoRedes;
 import com.prodama.repository.filter.ConexaoFilter;
@@ -40,6 +41,9 @@ public class ConexoesController {
 	
 	@Autowired
 	private TipoConexoes tipoConexoes;
+	
+	@Autowired
+	private Sistemas sistemas;
 
 	@GetMapping("/novo")
 	public ModelAndView novo(Conexao conexao) {
@@ -49,6 +53,7 @@ public class ConexoesController {
 		mv.addObject("clientes", clientes.findAll());
 		mv.addObject("tipoConexoes", tipoConexoes.findAll());
 		mv.addObject("tipoRedes", tipoRedes.findAll());
+		mv.addObject("todosSistemas", sistemas.findAll());
 		return mv;
 	}
 	
