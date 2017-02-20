@@ -9,76 +9,10 @@
 <title>PASS - Prodama</title>
 </head>
 
+<!-- th:classappend="${isAdmin} ? adminclass : userclass" 
+th:id="'myForm' + ${object.id}"-->
+
 <section layout:fragment="conteudo">
-	<script>
-		function Procurar() {
-
-			// Declare variables
-
-			var input, filter, ul, li, a, i;
-
-			input = document.getElementById('procurar');
-
-			filter = input.value.toUpperCase();
-
-			ul = document.getElementById("ulList");
-
-			li = ul.getElementsByTagName('li');
-
-			// Loop through all list items, and hide those who don't match the search query
-
-			for (i = 0; i < li.length; i++) {
-
-				a = li[i].getElementsByTagName("a")[0];
-
-				if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-
-					li[i].style.display = "";
-
-				} else {
-
-					li[i].style.display = "none";
-
-				}
-
-			}
-
-		}
-
-		function myFunction() {
-
-			// Declare variables
-
-			var input, filter, ul, li, a, i;
-
-			input = document.getElementById('procurar');
-
-			filter = input.value.toUpperCase();
-
-			ul = document.getElementById("myUL");
-
-			li = ul.getElementsByTagName('li');
-
-			// Loop through all list items, and hide those who don't match the search query
-
-			for (i = 0; i < li.length; i++) {
-
-				a = li[i].getElementsByTagName("a")[0];
-
-				if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-
-					li[i].style.display = "";
-
-				} else {
-
-					li[i].style.display = "none";
-
-				}
-
-			}
-
-		}
-	</script>
 
 	<div class="page-header">
 		<div class="container-fluid">
@@ -99,32 +33,32 @@
 			<span th:text="${mensagem}"></span>
 		</div>
 
-		<!-- <form method="GET" class="form-vertical  js-form-loading"
+		<form method="GET" class="form-vertical  js-form-loading"
 			th:object="${conexaoFilter}">
-			<div class="form-group">
+			<div class="form-group" id="custom-search-input">
 				<div class="input-group">
 					<input id="nome" type="text" th:field="*{cliente.nome}"
-						class="form-control filterinput search-query form-control" placeholder="Pesquise pelo nome" /> <span
-						class="input-group-btn">
+						class="form-control filterinput search-query form-control"
+						placeholder="Pesquise pelo nome" /> <span class="input-group-btn">
 						<button class="btn btn-default" type="submit">
 							<span class="glyphicon  glyphicon-search"></span>
 						</button>
 					</span>
 				</div>
 			</div>
-		</form> -->
-		<div class="row">
-		<div id="custom-search-input">
-			
-			<div class="input-group col-md-12">
+		</form>
+		<!--  <div class="row">
+			<div id="custom-search-input">
 
-				<input type="text" class="filterinput search-query form-control"
-					placeholder="Procurar" id="procurar" autofocus="">
+				<div class="input-group col-md-12">
 
-			</div>
+					<input type="text" class="filterinput search-query form-control"
+						placeholder="Procurar" id="procurar" autofocus="">
 
-		</div>
-		
+				</div>
+
+			</div>-->
+
 		<br> <br>
 
 
@@ -144,28 +78,168 @@
 			<div class="panel-body">
 				<ul class="list-group" id="list">
 					<li class="list-group-item" th:each="conexao : ${conexoes}">
-						<div class="row toggle" id="dropdown-detail-151"
-							data-toggle="detail-151">
+						<div class="row toggle"
+							th:id="'dropdown-detail-' + ${conexao.codigoSenior}"
+							th:data-toggle="'detail-' + ${conexao.codigoSenior}">
 
 							<div class="col-xs-10">
-								<a href="/" th:text="${conexao.cliente.nome}"></a>
+								<a th:data-toggle="'detail-' + ${conexao.codigoSenior}"
+									style="cursor: pointer" th:text="${conexao.cliente.nome}"></a>
 							</div>
 							<div class="col-xs-2">
 								<i class="fa fa-chevron-down pull-right"></i>
 							</div>
 
 						</div>
-						<div id="detail-151" style="display: none;">
+						<div th:id="'detail-' + ${conexao.codigoSenior}"
+							style="display: none;">
 							<hr>
-							<!-- <div class="container">-->
 
 							<div class="fluid-row">
 
-								<a class="btn btn-info" href="edit.php?id=151">Editar</a> <a
-									class="btn btn-danger" href="del.php?id=151">Deletar</a><br>
-								<br>
+								<a class="btn btn-info"
+									th:href="@{/senhas/{codigo}(codigo=${conexao.codigo})}">
+									<span class="fa  fa-edit"> Editar </span></a>
+								<a class="btn btn-danger"
+									data-toggle="modal" data-target="#confirmaExclusaoModal"
+									data:nome="${conexao.cliente.nome}" title="Excluir"
+									rel="tooltip" data-placement="top"
+									data:url-apagar="@{/senhas/{codigo}(codigo=${conexao.codigo})}">
+									<span class="fa  fa-trash"> Excluir </span>
+								</a> <br> <br>
 							</div>
+							
+							<fieldset>
+								<legend> Dados Gerais </legend>
+								<div class="col-xs-1">
+									<i> Código Senior: </i>
+								</div>
+								<div class="col-xs-5">
+									<div class="well">
+										<code th:text="${conexao.codigoSenior}"></code>
+									</div>
+								</div>
+								
+								<div class="col-xs-1">
+									<i> Nome: </i>
+								</div>
+								<div class="col-xs-5">
+									<div class="well">
+										<code th:text="${conexao.cliente.nome}"></code>
+									</div>
+								</div>
+							</fieldset>
+							<fieldset>
+								<legend> Coneão Remota </legend>
+								<div class="col-xs-1">
+									<i> Tipo Rede: </i>
+								</div>
+								<div class="col-xs-5">
+									<div class="well">
+										<code th:text="${conexao.tipoRede.nome}"></code>
+									</div>
+								</div>
+								
+								<div class="col-xs-1">
+									<i> Tipo Conexão: </i>
+								</div>
+								<div class="col-xs-5">
+									<div class="well">
+										<code th:text="${conexao.tipoConexao.nome}"></code>
+									</div>
+								</div>
+								<div class="col-xs-1">
+									<i> IP: </i>
+								</div>
+								<div class="col-xs-5">
+									<div class="well">
+										<code th:text="${conexao.ip}"></code>
+									</div>
+								</div>
+								<div class="col-xs-1">
+									<i> Usuário Rede: </i>
+								</div>
+								<div class="col-xs-5">
+									<div class="well">
+										<code th:text="${conexao.usuarioRede}"></code>
+									</div>
+								</div>
+								<div class="col-xs-1">
+									<i> Senha Rede: </i>
+								</div>
+								<div class="col-xs-5">
+									<div class="well">
+										<code th:text="${conexao.senhaRede}"></code>
+									</div>
+								</div>
+							</fieldset>
+							<fieldset>
+								<legend> Dados Sistemas </legend>
+								<div class="col-xs-1">
+									<i> Usuário Sistema: </i>
+								</div>
+								<div class="col-xs-5">
+									<div class="well">
+										<code th:text="${conexao.usuarioSistema}"></code>
+									</div>
+								</div>
+								
+								<div class="col-xs-1">
+									<i> Senha Sistema: </i>
+								</div>
+								<div class="col-xs-5">
+									<div class="well">
+										<code th:text="${conexao.senhaSistema}"></code>
+									</div>
+								</div>
+								<div class="col-xs-1">
+									<i> Usuário Banco de Dados: </i>
+								</div>
+								<div class="col-xs-5">
+									<div class="well">
+										<code th:text="${conexao.usuarioBd}"></code>
+									</div>
+								</div>
+								
+								<div class="col-xs-1">
+									<i> Senha Banco de Dados: </i>
+								</div>
+								<div class="col-xs-5">
+									<div class="well">
+										<code th:text="${conexao.senhaBd}"></code>
+									</div>
+								</div>
+								<div class="col-xs-1">
+									<i> Versões: </i>
+								</div>
+								<div class="col-xs-5">
+									<div class="well">
+										<code th:text="${conexao.versao}"></code>
+									</div>
+								</div>
+							</fieldset>
+							<fieldset>
+								<legend> Observação </legend>
+								<div class="col-xs-1">
+									<i> Pedir Permissão: </i>
+								</div>
+								<div class="col-xs-5">
+									<div class="well">
+										<code th:text="${conexao.permissao}"></code>
+									</div>
+								</div>
+								
+								<div class="col-xs-1">
+									<i> Observações Gerais: </i>
+								</div>
+								<div class="col-xs-5">
+									<div class="well">
+										<code th:text="${conexao.observacao}"></code>
+									</div>
+								</div>
+							</fieldset>
 						</div>
+						
 					</li>
 				</ul>
 			</div>
@@ -174,7 +248,7 @@
 
 
 
-		<div class="table-responsive">
+		<!--  <div class="table-responsive">
 			<table id="tabela-produtos"
 				class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
 				<thead class="aw-table-header-solid">
@@ -211,7 +285,8 @@
 				</tbody>
 			</table>
 		</div>
-	</div>
+	</div> -->
+	
 
 	<div class="modal fade" id="confirmaExclusaoModal" tabindex="-1"
 		data-keyboard="false" data-backdrop="static">
@@ -237,78 +312,14 @@
 		</div>
 	</div>
 
-	<div class="modal fade" id="visualizarModal" tabindex="-1"
-		data-keyboard="false" data-backdrop="static">
-		<div class="modal-dialog">
-			<form th:attr="data-url-base=@{/senhas}" method="POST">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h4 class="modal-title">Dados da Conexão</h4>
-					</div>
 
-					<div class="modal-body">
-						<span>Tem certeza que deseja deletar a conexão?</span>
-					</div>
-
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
 
 </section>
 
 <th:block layout:fragment="javascript-extra">
 	<script th:src="@{/js/excluir-modal.js}"></script>
-	<script>
-		$(document).ready(function() {
-
-			$('[id^=detail-]').hide();
-
-			$('.toggle').click(function() {
-
-				$input = $(this);
-
-				$target = $('#' + $input.attr('data-toggle'));
-
-				$target.slideToggle();
-
-			});
-
-			$('.filterinput').keyup(function() {
-
-				var a = $(this).val();
-
-				if (a.length > 2) {
-
-					// this finds all links in the list that contain the input,
-
-					// and hide the ones not containing the input while showing the ones that do
-
-					var containing = $('#list li').filter(function() {
-
-						var regex = new RegExp('\\b' + a, 'i');
-
-						return regex.test($('a', this).text());
-
-					}).slideDown();
-
-					$('#list li').not(containing).slideUp();
-
-				} else {
-
-					$('#list li').slideDown();
-
-				}
-
-				return false;
-
-			})
-
-		});
-	</script>
+	<script th:src="@{/js/pesquisaSenha.js}"></script>
+	<script th:src="@{/js/expandir.js}"></script>
 </th:block>
 
 

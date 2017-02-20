@@ -34,11 +34,12 @@ public class Conexao  implements Serializable{
 	@JoinColumn(name = "CodigoCliente")
 	private Cliente cliente;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "CodigoTipoConexao")
 	private TipoConexao tipoConexao;
 	
-	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "CodigoTipoRede")
 	private TipoRede tipoRede;
