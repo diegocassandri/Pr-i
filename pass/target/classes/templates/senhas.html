@@ -152,8 +152,12 @@ th:id="'myForm' + ${object.id}"-->
 									<i> IP: </i>
 								</div>
 								<div class="col-xs-5">
-									<div class="well">
-										<code th:text="${conexao.ip}"></code>
+									<div class="well"> 
+										<a class="btn btn-link btn-xs" style="cursor: pointer"
+										th:href="@{/senhas/abrir/{codigo}(codigo=${conexao.codigo})}">
+											<code th:text="${conexao.ip}"></code>
+											
+										</a>
 									</div>
 								</div>
 								<div class="col-xs-1">
@@ -313,7 +317,7 @@ th:id="'myForm' + ${object.id}"-->
 	</div>
 
 
-
+</div>
 </section>
 
 <th:block layout:fragment="javascript-extra">

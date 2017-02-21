@@ -2,22 +2,19 @@ package com.prodama.model;
 
 
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import javax.persistence.FetchType;
+import java.util.List;
 
 import com.prodama.model.Cliente;
 
@@ -69,11 +66,8 @@ public class Conexao  implements Serializable{
 	
 	private String observacao;
 	
-	
-	
-	@ManyToMany(cascade=CascadeType.MERGE,fetch=FetchType.EAGER)
-	@JoinTable(name = "conexao_sistema", joinColumns = @JoinColumn(name = "codigo_conexao"), inverseJoinColumns = @JoinColumn(name = "codigo_sistema"))
-	private List<Sistema> sistemas = new LinkedList<Sistema>();
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "conexao")
+	private List<ConexaoCliente> conexaoCliente;
 	
 
 	public Long getCodigo() {
@@ -196,13 +190,46 @@ public class Conexao  implements Serializable{
 		this.observacao = observacao;
 	}
 
-	public List<Sistema> getSistemas() {
-		return sistemas;
+	/**
+	 * @return the conexaoCliente
+	 */
+	public List<ConexaoCliente> getConexaoCliente() {
+		return conexaoCliente;
 	}
 
-	public void setSistemas(List<Sistema> sistemas) {
-		this.sistemas = sistemas;
+	/**
+	 * @param conexaoCliente the conexaoCliente to set
+	 */
+	public void setConexaoCliente(List<ConexaoCliente> conexaoCliente) {
+		this.conexaoCliente = conexaoCliente;
 	}
+
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Conexao other = (Conexao) obj;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
+			return false;
+		return true;
+	}
+	
 	
 
 	

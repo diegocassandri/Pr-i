@@ -1,16 +1,14 @@
 package com.prodama.model;
 
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.FetchType;
+import java.util.List;
+
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -29,8 +27,10 @@ public class Sistema implements Serializable{
 	@NotBlank
 	private String nomeAbreviado;
 	
-	@ManyToMany(mappedBy="sistemas",cascade=CascadeType.REMOVE,fetch=FetchType.EAGER)
-	private List<Conexao> conexoes = new LinkedList<Conexao>();
+	
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sistema")
+	private List<ConexaoCliente> conexaoCliente;
 
 	public Long getCodigo() {
 		return codigo;
@@ -58,13 +58,7 @@ public class Sistema implements Serializable{
 	
 	
 
-	public List<Conexao> getConexoes() {
-		return conexoes;
-	}
-
-	public void setConexoes(List<Conexao> conexoes) {
-		this.conexoes = conexoes;
-	}
+	
 
 	@Override
 	public int hashCode() {

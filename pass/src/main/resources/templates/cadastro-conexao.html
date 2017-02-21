@@ -38,6 +38,8 @@
 
 			<input type="hidden" th:field="*{codigo}" />
 
+
+
 			<div class="row">
 				<div class="form-group col-sm-6"
 					th:classappend="${#fields.hasErrors('cliente')} ? has-error">
@@ -134,12 +136,6 @@
 						th:field="*{observacao}"></textarea>
 				</div>
 
-				<div class="form-group col-sm-3"
-					th:classappend="${#fields.hasErrors('versao')} ? has-error">
-					<label class="control-label" for="ip">Versão: </label>
-					<textarea id="versao" rows="3" class="form-control"
-						th:field="*{versao}"></textarea>
-				</div>
 
 				<div class="form-group col-sm-3"
 					th:classappend="${#fields.hasErrors('permissao')} ? has-error">
@@ -152,12 +148,12 @@
 				</div>
 
 			</div>
+
 			<div class="row">
 				<div class="form-group col-sm-12">
 					<label class="control-label" for="tipo">Sistemas e Versões:
 					</label> <a class="btn btn-primary btn-xs" style="cursor: pointer"
-						data-toggle="modal" data-target="#addSistemaModal"
-						title="Adicionar" rel="tooltip"> <span class="fa  fa-plus">
+							th:href="@{/senhas/conexaoSistema/novo}"> <span class="fa  fa-plus">
 							Adicionar</span>
 					</a>
 
@@ -166,30 +162,33 @@
 							class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
 							<thead class="aw-table-header-solid">
 								<tr>
-									<th class="">Código</th>
-									<th>Nome</th>
+									<th>Cliente</th>
+									<th>Sistema</th>
+									<th>Versão</th>
 									<th class="text-center">Opções</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="sistema : ${conexao.sistemas}">
-									<td th:text="${sistema.codigo}" width="10%" class="text-center"></td>
-									<td><span th:text="${sistema.nome}"></span></td>
+								<tr th:each="conexaoCliente : ${conexoesClientes}">
+
+									<td><span th:text="${conexaoCliente.conexao.cliente.nome}"></span></td>
+									<td><span th:text="${conexaoCliente.sistema.nome}"></span></td>
+									<td><span th:text="${conexaoCliente.versao}"></span></td>
 
 									<td class="text-center" width="10%"><a
 										class="btn btn-link btn-xs"
-										th:href="@{/sistemas/{codigo}(codigo=${sistema.codigo})}"
+										th:href="@{/senhas/conexaoSistema/{codigo}(codigo=${conexaoCliente.codigo})}"
 										title="Editar" rel="tooltip" data-placement="top"> <span
 											class="fa  fa-pencil"></span>
 									</a> <a class="btn btn-link btn-xs" style="cursor: pointer"
 										data-toggle="modal" data-target="#confirmaExclusaoModal"
-										data:nome="${sistema.nome}" title="Excluir" rel="tooltip"
-										data-placement="top"
-										data:url-apagar="@{/sistemas/{codigo}(codigo=${sistema.codigo})}">
+										data:nome="${conexaoCliente.conexao.cliente.nome}" title="Excluir"
+										rel="tooltip" data-placement="top"
+										data:url-apagar="@{/senhas/conexaoSistema/{codigo}(codigo=${conexaoCliente.codigo})}">
 											<span class="fa  fa-trash"></span>
 									</a></td>
 								</tr>
-								<tr th:if="${conexao.sistemas.empty}">
+								<tr th:if="${conexoesClientes.empty}">
 									<td colspan="3">Nenhum sistema cadastrado</td>
 								</tr>
 							</tbody>
@@ -205,47 +204,37 @@
 		</form>
 	</div>
 
-	<div class="modal fade" id="addSistemaModal" tabindex="-1"
+	<div class="modal fade" id="confirmaExclusaoModal" tabindex="-1"
 		data-keyboard="false" data-backdrop="static">
 		<div class="modal-dialog">
-			<form method="POST"
-				 th:action="@{/senhas/novo}"
-				 th:object="${conexao}">
-						
-					<input type="hidden" th:field="*{codigo}" />
-					<div class="modal-content">
+			<form th:attr="data-url-base=@{/senhas/conexaoSistema}" method="POST">
+				<input type="hidden" name="_method" value="DELETE" />
+
+				<div class="modal-content">
 					<div class="modal-header">
-						<h4 class="modal-title">Vincular Sistema</h4>
+						<h4 class="modal-title">Você tem certeza?</h4>
 					</div>
 
 					<div class="modal-body">
-						<input type="hidden" th:field="*{codigo}" />
-
-						<div class="row">
-							<div class="form-group col-sm-6"
-								th:classappend="${#fields.hasErrors('sistemas')} ? has-error">
-								<label class="control-label" for="sistema">Sistema:</label> <select
-									id="sistema" class="form-control" th:field="*{sistemas}">
-									<option value="">Selecione um sistema</option>
-									<option th:each="sistema : ${todosSistemas}"
-										th:value="${sistema.codigo}" th:text="${sistema.nome}"></option>
-								</select>
-							</div>
-						</div>
+						<span>Tem certeza que deseja deletar o Sistema da Conexão?</span>
 					</div>
+
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-						<button type="submit" class="btn btn-primary">Salvar</button>
+						<button type="submit" class="btn btn-danger">Excluir</button>
 					</div>
 				</div>
 			</form>
-
 		</div>
 	</div>
 
 
 
+
+
 </section>
 
-<section layout:fragment="javascript-extra"></section>
+<section layout:fragment="javascript-extra">
+	<script th:src="@{/js/excluir-modal.js}"></script>
+</section>
 </html>

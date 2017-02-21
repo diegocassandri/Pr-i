@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.support.DomainClassConverter;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -45,24 +44,7 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 	
 
 
-    // *************************************************************************************************
-    // The Authentication Manager Bean provides the source that userdata gets
-    // authenticated against. In this Scenario a ldap server is used.
-    // *************************************************************************************************
-    @Bean
-    public DefaultSpringSecurityContextSource getSource() throws Exception {
 
-        String address = "ldap://192.168.7.48:389/dc=ldap";  //example url
-        String ldapUser = "cn=admin,dc=ldap";             //example login
-        String ldapPassword = "toor";                     //example password
-
-        DefaultSpringSecurityContextSource source = new DefaultSpringSecurityContextSource(
-            address);
-        source.setUserDn(ldapUser);
-        source.setPassword(ldapPassword);
-        source.afterPropertiesSet();
-        return source;
-     }
 	
 
 

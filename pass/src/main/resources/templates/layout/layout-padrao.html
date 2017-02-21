@@ -15,6 +15,8 @@
 <link rel="stylesheet"
 	th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" />
 
+<link rel="shortcut icon" th:href="@{/images/favicon.png}" />
+
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -38,14 +40,15 @@
 							class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand  hidden-xs" th:href="@{/}"> <i
-						class="fa fa-google-wallet" style="color:white" aria-hidden="true"> PRODAMA</i>
+						class="fa fa-google-wallet" style="color: white"
+						aria-hidden="true"> PRODAMA</i>
 					</a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse"
 					id="bs-example-navbar-collapse-1">
-					
+
 					<ul class="nav navbar-nav">
 						<li><a th:href="@{/}">Senhas</a></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -82,15 +85,13 @@
 		<section class="container-fluid" layout:fragment="conteudo"></section>
 
 		<footer class="container-fluid aw-layout-footer  js-content">
-			<div class="container-fluid">
-				
-			</div>
+			<div class="container-fluid"></div>
 		</footer>
 
 	</div>
 
 
-		<script type="text/javascript"
+	<script type="text/javascript"
 		th:src="@{/webjars/jquery/jquery.min.js}"></script>
 	<script type="text/javascript"
 		th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>

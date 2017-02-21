@@ -52,6 +52,11 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -72,6 +77,12 @@
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.directory.server</groupId>
+			<artifactId>apacheds-server-jndi</artifactId>
+			<version>1.5.5</version>
 		</dependency>
 
 		<dependency>
@@ -96,14 +107,33 @@
 			<version>4.7.0</version>
 		</dependency>
 
-	
+
+		<dependency>
+			<groupId>org.springframework.ldap</groupId>
+			<artifactId>spring-ldap-core</artifactId>
+			<version>2.3.1.RELEASE</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-ldap</artifactId>
 		</dependency>
-		
+		<dependency>
+			<groupId>com.unboundid</groupId>
+			<artifactId>unboundid-ldapsdk</artifactId>
+			<version>3.2.1</version>
+		</dependency>
 
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 
 	<build>
