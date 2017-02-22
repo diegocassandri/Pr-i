@@ -1,7 +1,8 @@
 package com.prodama.controller;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -52,13 +53,7 @@ public class ConexoesController {
 	@GetMapping("/novo")
 	public ModelAndView novo(Conexao conexao) {
 		
-		/*try {
-			mv.addObject("conexoesClientes", conexaoClientes.findByConexao(conexao));
-		} catch (Exception e) {
-			List<ConexaoCliente> conexaoCliente = new ArrayList<ConexaoCliente>();
-			mv.addObject("conexoesClientes",conexaoCliente);
-
-		}*/
+		
 		ModelAndView mv = new ModelAndView("cadastro-conexao");
 		mv.addObject(conexao);
 		mv.addObject("permissoes", SimNao.values());
@@ -66,7 +61,13 @@ public class ConexoesController {
 		mv.addObject("tipoConexoes", tipoConexoes.findAll());
 		mv.addObject("tipoRedes", tipoRedes.findAll());
 		mv.addObject("todosSistemas", sistemas.findAll());
-		mv.addObject("conexoesClientes", conexaoClientes.findAll());
+		try {
+			mv.addObject("conexoesClientes", conexaoClientes.findByConexao(conexao));
+		} catch (Exception e) {
+			List<ConexaoCliente> conexaoCliente = new ArrayList<ConexaoCliente>();
+			mv.addObject("conexoesClientes",conexaoCliente);
+		}
+		
 		
 		return mv;
 	}
@@ -90,6 +91,15 @@ public class ConexoesController {
 		mv.addObject("sistemas", sistemas.findAll());
 		return mv;
 	}
+	
+	@GetMapping("/conexaoSistema/novo/{codigo}")
+	public ModelAndView novoConexaoSistemaAtr(ConexaoCliente conexaoCliente,@PathVariable Long codigo) {
+		ModelAndView mv = new ModelAndView("cadastro-conexao-sistema");
+		mv.addObject(conexaoCliente);
+		mv.addObject("conexoes", conexoes.findOne(codigo));
+		mv.addObject("sistemas", sistemas.findAll());
+		return mv;
+	}
 
 	@PostMapping("/conexaoSistema/novo")
 	public ModelAndView salvarConexaoSistema(@Valid ConexaoCliente conexaoCliente, BindingResult result,
@@ -100,7 +110,7 @@ public class ConexoesController {
 
 		conexaoClientes.save(conexaoCliente);
 		attributes.addFlashAttribute("mensagem", "sistema salvo com sucesso!");
-		return new ModelAndView("redirect:/senhas/conexaoSistema/novo");
+		return new ModelAndView("redirect:/senhas/" + conexaoCliente.getConexao().getCodigo());
 	}
 
 	@GetMapping("/abrir/{codigo}")

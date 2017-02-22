@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 
 @Entity
 public class ConexaoCliente {
@@ -27,7 +29,7 @@ public class ConexaoCliente {
 	@JoinColumn(name="codigo_sistema")
 	private Sistema sistema;
 	
-	@NotNull
+	@NotBlank
 	private String versao;
 
     

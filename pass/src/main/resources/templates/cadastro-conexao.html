@@ -149,11 +149,12 @@
 
 			</div>
 
-			<div class="row">
+			<div class="row" >
 				<div class="form-group col-sm-12">
 					<label class="control-label" for="tipo">Sistemas e Versões:
 					</label> <a class="btn btn-primary btn-xs" style="cursor: pointer"
-							th:href="@{/senhas/conexaoSistema/novo}"> <span class="fa  fa-plus">
+							th:href="@{/senhas/conexaoSistema/novo}"
+							th:if="${conexao.codigo != null}"> <span class="fa  fa-plus">
 							Adicionar</span>
 					</a>
 
@@ -182,14 +183,14 @@
 											class="fa  fa-pencil"></span>
 									</a> <a class="btn btn-link btn-xs" style="cursor: pointer"
 										data-toggle="modal" data-target="#confirmaExclusaoModal"
-										data:nome="${conexaoCliente.conexao.cliente.nome}" title="Excluir"
+										data:nome="${conexaoCliente.sistema.nome}" title="Excluir"
 										rel="tooltip" data-placement="top"
 										data:url-apagar="@{/senhas/conexaoSistema/{codigo}(codigo=${conexaoCliente.codigo})}">
 											<span class="fa  fa-trash"></span>
 									</a></td>
 								</tr>
 								<tr th:if="${conexoesClientes.empty}">
-									<td colspan="3">Nenhum sistema cadastrado</td>
+									<td colspan="4">Nenhum sistema cadastrado</td>
 								</tr>
 							</tbody>
 						</table>

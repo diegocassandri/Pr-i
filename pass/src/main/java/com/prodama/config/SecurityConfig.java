@@ -1,13 +1,13 @@
 package com.prodama.config;
 
-
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -21,25 +21,19 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	
-	 @Value("${conexao.usuario}")
-	 private static String user;
-	 
-	 @Value("${conexao.senha}")
-	 private static String pass;
 
+
+	@Autowired
+	private UserDetailsService userDetailsService;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication().withUser("prodama").password("prodama").roles("ADMIN");
+		auth.userDetailsService(userDetailsService)/* .passwordEncoder(passwordEncoder()) */;
 		auth.ldapAuthentication().contextSource().url("ldap://192.168.7.48:389/dc=prodama,dc=com,dc=br")
-				.managerDn("uid=admin,ou=system")
-				.managerPassword("secret")
-				.and().
-				userSearchBase("ou=users")
+				.managerDn("uid={0},ou=system").managerPassword("secret").and().userSearchBase("ou=users")
 				.userSearchFilter("(cn={0})");
-		auth.userDetailsService(userDetailsService())/*.passwordEncoder(passwordEncoder())*/;
-		
+
 	}
 
 	/*
@@ -72,12 +66,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.httpBasic().and().authorizeRequests().antMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")
-				.antMatchers(HttpMethod.PATCH, "/**").hasRole("ADMIN").antMatchers(HttpMethod.DELETE, "/**")
-				.hasRole("ADMIN").and().csrf().disable().authorizeRequests().anyRequest().fullyAuthenticated().and()
-				.formLogin().loginPage("/login").permitAll().and().logout()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).and().exceptionHandling()
-				.accessDeniedPage("/error/403").and().sessionManagement().invalidSessionUrl("/login");
+		http.httpBasic()
+		.and()
+		.authorizeRequests()
+		.antMatchers(HttpMethod.POST, "/**").permitAll()
+		.antMatchers(HttpMethod.PATCH, "/**").permitAll()
+		.antMatchers(HttpMethod.DELETE, "/**").permitAll()
+		.and()
+		.csrf()
+		.disable()
+		.authorizeRequests()
+		.anyRequest()
+		.fullyAuthenticated()
+		.and()
+		.formLogin()
+		.loginPage("/login")
+		.permitAll()
+		.and()
+		.logout()
+	    .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).and().exceptionHandling()
+		.accessDeniedPage("/error/403").and().sessionManagement().invalidSessionUrl("/login");
 
 	}
 
