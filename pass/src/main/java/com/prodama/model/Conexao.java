@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.persistence.FetchType;
 import java.util.List;
+import javax.persistence.Column;
 
 import com.prodama.model.Cliente;
 
@@ -30,6 +31,7 @@ public class Conexao  implements Serializable{
 	private Long codigo;
 	
 	@NotNull
+	@Column(unique = true)
 	private Long codigoSenior;
 
 	@ManyToOne
@@ -53,6 +55,10 @@ public class Conexao  implements Serializable{
 	private String usuarioRede;
 	private String senhaRede;
 	
+	private String iph;
+	private String usuarioRedeh;
+	private String senhaRedeh;
+	
 	private String usuarioSistema;
 	private String senhaSistema;
 	
@@ -68,6 +74,9 @@ public class Conexao  implements Serializable{
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "conexao")
 	private List<ConexaoCliente> conexaoCliente;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "conexao")
+	private List<ConexaoRede> conexaoRede;
 	
 
 	public Long getCodigo() {
@@ -137,9 +146,34 @@ public class Conexao  implements Serializable{
 	public String getSenhaRede() {
 		return senhaRede;
 	}
+	
+	
+	public String getIph() {
+		return iph;
+	}
+
+	public void setIph(String iph) {
+		this.iph = iph;
+	}
+
+	public String getUsuarioRedeh() {
+		return usuarioRedeh;
+	}
+
+	public void setUsuarioRedeh(String usuarioRedeh) {
+		this.usuarioRedeh = usuarioRedeh;
+	}
+
+	public String getSenhaRedeh() {
+		return senhaRedeh;
+	}
 
 	public void setSenhaRede(String senhaRede) {
 		this.senhaRede = senhaRede;
+	}
+
+	public void setSenhaRedeh(String senhaRedeh) {
+		this.senhaRedeh = senhaRedeh;
 	}
 
 	public String getUsuarioSistema() {
@@ -188,7 +222,12 @@ public class Conexao  implements Serializable{
 
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
+		
+		
 	}
+	
+	
+	
 
 	/**
 	 * @return the conexaoCliente
@@ -203,6 +242,17 @@ public class Conexao  implements Serializable{
 	public void setConexaoCliente(List<ConexaoCliente> conexaoCliente) {
 		this.conexaoCliente = conexaoCliente;
 	}
+	
+	
+	public List<ConexaoRede> getConexaoRede() {
+		return conexaoRede;
+	}
+
+	
+	public void setConexaoRede(List<ConexaoRede> conexaoRede) {
+		this.conexaoRede = conexaoRede;
+	}
+
 
 	
 	@Override
