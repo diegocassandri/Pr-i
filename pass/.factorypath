@@ -111,8 +111,6 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/aopalliance/aopalliance/1.0/aopalliance-1.0.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/springframework/spring-context/4.3.6.RELEASE/spring-context-4.3.6.RELEASE.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/unboundid/unboundid-ldapsdk/3.2.1/unboundid-ldapsdk-3.2.1.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/springframework/boot/spring-boot-configuration-processor/1.4.4.RELEASE/spring-boot-configuration-processor-1.4.4.RELEASE.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/json/json/20140107/json-20140107.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="EXTJAR" id="C:\glassfish40\glassfish\modules\bean-validator.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="EXTJAR" id="C:\glassfish40\glassfish\modules\endorsed\javax.annotation-api.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="EXTJAR" id="C:\glassfish40\glassfish\modules\endorsed\jaxb-api-osgi.jar" enabled="true" runInBatchMode="false"/>
