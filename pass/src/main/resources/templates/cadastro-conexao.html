@@ -99,7 +99,7 @@
 						<div class="form-group col-sm-12">
 							<label class="control-label" for="tipo"> Usuários</label> <a
 								class="btn btn-primary btn-xs" style="cursor: pointer"
-								th:href="@{/senhas/conexaoRede/novo/{codigo}(codigo=${conexao.codigo})}"
+								th:href="@{/senhas/conexaoRede/novo}"
 								th:if="${conexao.codigo != null}"> <span class="fa  fa-plus">
 									Adicionar</span>
 							</a>
@@ -214,7 +214,7 @@
 				<div class="form-group col-sm-12">
 					<label class="control-label" for="tipo">Sistemas e Versões:
 					</label> <a class="btn btn-primary btn-xs" style="cursor: pointer"
-						th:href="@{/senhas/conexaoSistema/novo/{codigo}(codigo=${conexao.codigo})}"
+						th:href="@{/senhas/conexaoSistema/novo}"
 						th:if="${conexao.codigo != null}"> <span class="fa  fa-plus">
 							Adicionar</span>
 					</a>
