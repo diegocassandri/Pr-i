@@ -47,31 +47,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Bean
 	public DefaultSpringSecurityContextSource contextSource() {
-		return  new DefaultSpringSecurityContextSource(Arrays.asList("ldap://192.168.7.48:389"), "dc=prodama,dc=com,dc=br");
+		return  new DefaultSpringSecurityContextSource(Arrays.asList("ldap://192.168.7.48:389"), "dc=PRODAMA,dc=COM,dc=BR");
 	}
 
-
-	/*
-	 * @Override protected void configure(AuthenticationManagerBuilder auth)
-	 * throws Exception {
-	 * /*auth.userDetailsService(userDetailsService).passwordEncoder(
-	 * passwordEncoder()) auth.inMemoryAuthentication()
-	 * .withUser("prodama").password("prodama").roles("ADMIN");
-	 * 
-	 * 
-	 * }
-	 * 
-	 * auth .ldapAuthentication() .userDnPatterns("uid={0},ou=people")
-	 * .groupSearchBase("ou=groups") .contextSource(contextSource())
-	 * .passwordCompare() .passwordEncoder(new LdapShaPasswordEncoder())
-	 * .passwordAttribute("userPassword");
-	 */
-
-	/*
-	 * @Bean public DefaultSpringSecurityContextSource contextSource() { return
-	 * new DefaultSpringSecurityContextSource(Arrays.asList(
-	 * "ldap://192.168.7.48:389/"), "dc=PRODAMA,dc=COM,dc=BR"); }
-	 */
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
