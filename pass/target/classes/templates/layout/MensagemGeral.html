@@ -9,4 +9,8 @@
 	<span th:text="${mensagem}"></span>
 </div>
 
+<div class="alert alert-danger" th:if="${!#strings.isEmpty(mensagemErro)}">
+	<span th:text="${mensagemErro}"></span>
+</div>
+
 </html>

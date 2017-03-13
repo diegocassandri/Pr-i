@@ -93,8 +93,7 @@ th:id="'myForm' + ${object.id}"-->
 							</div>
 
 						</div>
-						<div th:id="'detail-' + ${conexao.codigo}"
-							style="display: none;">
+						<div th:id="'detail-' + ${conexao.codigo}" style="display: none;">
 							<hr>
 
 							<div class="fluid-row">
@@ -155,8 +154,7 @@ th:id="'myForm' + ${object.id}"-->
 								</div>
 								<div class="col-xs-5">
 									<div class="well">
-										<a class="btn btn-link btn-xs" style="cursor: pointer"
-											th:href="@{/senhas/abrir/{codigo}(codigo=${conexao.codigo})}">
+										<a style="cursor: grab" onclick="Executar();">
 											<code th:text="${conexao.ip}"></code>
 
 										</a>
@@ -167,8 +165,7 @@ th:id="'myForm' + ${object.id}"-->
 								</div>
 								<div class="col-xs-5">
 									<div class="well">
-										<a class="btn btn-link btn-xs" style="cursor: pointer"
-											th:href="@{/senhas/abrirh/{codigo}(codigo=${conexao.codigo})}">
+										<a style="cursor: grab">
 											<code th:text="${conexao.iph}"></code>
 
 										</a>
@@ -200,26 +197,26 @@ th:id="'myForm' + ${object.id}"-->
 														<td><span th:text="${conexaoRede.usuario}"></span></td>
 														<td><span th:text="${conexaoRede.senha}"></span></td>
 														<td><span th:text="${conexaoRede.tipoBase}"></span></td>
-														<td class="text-center" th:attr="data-role=${conexaoRede.codigo}"><span class="label" 
-															th:text="${conexaoRede.status}"
+														<td class="text-center"
+															th:attr="data-role=${conexaoRede.codigo}"><span
+															class="label" th:text="${conexaoRede.status}"
 															th:classappend="${conexaoRede.desconectado ? 'label-danger' : 'label-success'}"></span></td>
-														<td class="text-center">
-															<a class="btn btn-success btn-xs js-atualizar-status" id="ON"
-															 title="Conectar" rel="tooltip"
+														<td class="text-center"><a
+															class="btn btn-success btn-xs js-atualizar-status"
+															id="ON" title="Conectar" rel="tooltip"
 															data-placement="top"
-															th:attr="data-codigo=${conexaoRede.codigo}" 
-															th:href="@{/senhas/conexaoRede/{codigo}/conectar(codigo=${conexaoRede.codigo})}">
+															th:attr="data-codigo=${conexaoRede.codigo}"
+														    th:href="@{/senhas/conexaoRede/{codigo}/conectar(codigo=${conexaoRede.codigo})}">
 																<span class="fa  fa-on">ON</span>
-															</a>
-															<a class="btn btn-danger btn-xs js-atualizar-status" id="OFF"
-														    title="Desconectar" rel="tooltip"
+														</a> <a class="btn btn-danger btn-xs js-atualizar-status"
+															id="OFF" title="Desconectar" rel="tooltip"
 															data-placement="top"
 															th:attr="data-codigo=${conexaoRede.codigo}"
 															th:href="@{/senhas/conexaoRede/{codigo}/desconectar(codigo=${conexaoRede.codigo})}">
 																<span class="fa fa-off">OFF</span>
-														</a>
-														</td>
-														<td class="text-center" th:attr="data-user=${conexaoRede.codigo}"><span
+														</a></td>
+														<td class="text-center"
+															th:attr="data-user=${conexaoRede.codigo}"><span
 															th:text="${conexaoRede.usuarioLogado}"></span></td>
 													</tr>
 													<tr th:if="${conexao.ConexaoRede.empty}">
@@ -378,31 +375,38 @@ th:id="'myForm' + ${object.id}"-->
 	</script>
 	<script>
 		$(function() {
-			$('.js-atualizar-status').on('click',
+			$('.js-atualizar-status').on(
+					'click',
 					function(event) {
 						event.preventDefault();
 
 						var botaoConectar = $(event.currentTarget);
 						var urlConectar = botaoConectar.attr('href');
-						var idBotao     = botaoConectar.attr("id"); 
-						var botaoOn     = document.getElementById("ON");
+						var idBotao = botaoConectar.attr("id");
+						var botaoOn = document.getElementById("ON");
 
-						
 						var response = $.ajax({
 							url : urlConectar,
 							type : 'PUT'
 						});
 
 						response.done(function(e) {
-							var codigoConexaoRede = botaoConectar.data('codigo');
-							if(idBotao == "ON"){
-								$('[data-role=' + codigoConexaoRede + ']').html('<span class="label label-success">' + e + '</span>');
+							var codigoConexaoRede = botaoConectar
+									.data('codigo');
+							if (idBotao == "ON") {
+								$('[data-role=' + codigoConexaoRede + ']')
+										.html(
+												'<span class="label label-success">'
+														+ e + '</span>');
 								$("#ON").hide;
 								$("#OFF").show;
-							} else{
-								$('[data-role=' + codigoConexaoRede + ']').html('<span class="label label-danger">' + e + '</span>');
+							} else {
+								$('[data-role=' + codigoConexaoRede + ']')
+										.html(
+												'<span class="label label-danger">'
+														+ e + '</span>');
 							}
-							
+
 							/*botaoConectar.hide();*/
 						});
 
@@ -413,6 +417,11 @@ th:id="'myForm' + ${object.id}"-->
 
 					});
 		});
+	</script>
+	<script>
+		function Executar() {
+			document.location.href = "C:\\Windows\\System32\\mstsc.exe";
+		}
 	</script>
 </th:block>
 

@@ -1,6 +1,7 @@
 package com.prodama.config;
 
-import org.springframework.security.authentication.encoding.LdapShaPasswordEncoder;
+
+
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -35,13 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication().withUser("prodama").password("prodama").roles("ADMIN");
 		auth.userDetailsService(userDetailsService)/* .passwordEncoder(passwordEncoder()) */;
-		auth
-		.ldapAuthentication()
-			.userDnPatterns("uid={0}")
-			.contextSource(contextSource())
-			.passwordCompare()
-				.passwordEncoder(new LdapShaPasswordEncoder())
-				.passwordAttribute("userPassword");
+		 auth
+         .ldapAuthentication()
+         .userSearchFilter("(&(objectClass=user)(uid={0}))")
+         .userDnPatterns("uid={0},DC=prodama,DC=com,DC=br")/*.passwordCompare()
+			.passwordEncoder(new LdapShaPasswordEncoder())
+			.passwordAttribute("userPassword")*/;
 
 	}
 	

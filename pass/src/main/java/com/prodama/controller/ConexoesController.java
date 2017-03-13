@@ -35,6 +35,7 @@ import com.prodama.repository.Sistemas;
 import com.prodama.repository.TipoConexoes;
 import com.prodama.repository.TipoRedes;
 import com.prodama.repository.filter.ConexaoFilter;
+import com.prodama.service.CadastroConexaoService;
 
 
 @Controller
@@ -58,9 +59,12 @@ public class ConexoesController {
 
 	@Autowired
 	private ConexaoClientes conexaoClientes;
-	
+	 
 	@Autowired
 	private ConexaoRedes conexaoRedes;
+	
+	@Autowired
+	private CadastroConexaoService cadastroConexao;
 
 	@GetMapping("/novo")
 	public ModelAndView novo(Conexao conexao) {
@@ -95,7 +99,13 @@ public class ConexoesController {
 			return novo(conexao);
 		}
 
-		conexoes.save(conexao);
+		try{
+			cadastroConexao.salvar(conexao);
+		}catch (RuntimeException e){
+			result.rejectValue("codigoSenior", e.getMessage(), e.getMessage());
+			return novo(conexao);
+		}
+		
 		attributes.addFlashAttribute("mensagem", "Conexão salva com sucesso!");
 		return new ModelAndView("redirect:/senhas/" + conexao.getCodigo());
 	}
@@ -243,18 +253,18 @@ public class ConexoesController {
 		conexaoRede.setStatus(StatusConexao.CONECTADO);
 		conexaoRede.setUsuarioLogado((SecurityContextHolder.getContext()).getAuthentication().getName());
 		conexaoRedes.save(conexaoRede);
-		String ip = "";
+		String ip;
 		if(conexaoRede.getTipoBase() == TipoBase.Produção){
 			ip = conexaoRede.getConexao().getIp();
 		} else if(conexaoRede.getTipoBase() == TipoBase.Homologação){
 			ip = conexaoRede.getConexao().getIph();
 		}
 		
-		try {
+		/*try {
 			Runtime.getRuntime().exec("mstsc.exe /v: " + ip);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 		
 		return StatusConexao.CONECTADO.toString();
 	}
