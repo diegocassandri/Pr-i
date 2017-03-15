@@ -2,55 +2,49 @@ package com.prodama.config;
 
 
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-
-import java.util.Arrays;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpMethod;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+@Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-@Order(Ordered.HIGHEST_PRECEDENCE)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-	@Autowired
-	private UserDetailsService userDetailsService;
+
 
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("prodama").password("prodama").roles("ADMIN");
-		auth.userDetailsService(userDetailsService)/* .passwordEncoder(passwordEncoder()) */;
-		 auth
-         .ldapAuthentication()
-         .userSearchFilter("(&(objectClass=user)(uid={0}))")
-         .userDnPatterns("uid={0},DC=prodama,DC=com,DC=br")/*.passwordCompare()
-			.passwordEncoder(new LdapShaPasswordEncoder())
-			.passwordAttribute("userPassword")*/;
-
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+		
+		DefaultSpringSecurityContextSource ctx = new DefaultSpringSecurityContextSource("ldap://192.168.7.48:3268/");
+		ctx.setBase("dc=PRODAMA,dc=COM,dc=BR");
+		ctx.afterPropertiesSet();
+		ctx.isAnonymousReadOnly();
+		ctx.setUserDn("CN=Diego Cassandri,OU=Suporte,DC=prodama,DC=com,DC=br");
+		ctx.setPassword("knoppix8860");
+		
+		auth
+		.ldapAuthentication()
+		.userSearchFilter("(sAMAccountName={0})")
+		.userDnPatterns("OU=Suporte,DC=prodama,DC=com,DC=br")	
+		 .contextSource(ctx);
 	}
+
 	
-	@Bean
+	/*@Bean
 	public DefaultSpringSecurityContextSource contextSource() {
-		return  new DefaultSpringSecurityContextSource(Arrays.asList("ldap://192.168.7.48:389"), "dc=PRODAMA,dc=COM,dc=BR");
-	}
-
-
+		return  new DefaultSpringSecurityContextSource(Arrays.asList("ldap://192.168.7.48:389/"), "dc=PRODAMA,dc=COM,dc=BR");
+	}*/
+	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/layout/**").antMatchers("/images/**").antMatchers("/stylesheets/**")
@@ -87,4 +81,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
+
 }
+	
