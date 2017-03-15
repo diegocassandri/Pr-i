@@ -16,11 +16,11 @@ public class CadastroConexaoService {
 	@Autowired
 	private Conexoes conexoes;
 	
-	@Transactional
+	@Transactional  
 	public Conexao salvar(Conexao conexao){
 		
 		Optional<Conexao> conexaoOptional = conexoes.findByCodigoSenior(conexao.getCodigoSenior());
-		if ( (conexaoOptional.isPresent()) && (conexao.getCodigo() == null ) ) {
+		if ((conexaoOptional.isPresent()) && (conexao.getCodigo() == null ) ) {
 			throw new RuntimeException("Código Senior já cadastrado");
 		}
 		

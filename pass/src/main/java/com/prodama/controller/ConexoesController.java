@@ -187,11 +187,6 @@ public class ConexoesController {
 	public ModelAndView pesquisar(ConexaoFilter conexaoFilter) {
 		ModelAndView mv = new ModelAndView("senhas");
 		mv.addObject("conexoes", conexoes.findAll());
-		/*
-		 * mv.addObject("conexoes", conexoes.findByClienteContaining(
-		 * Optional.ofNullable(conexaoFilter.getCliente().getNome()).orElse("%")
-		 * ));
-		 */
 		return mv;
 	}
 
