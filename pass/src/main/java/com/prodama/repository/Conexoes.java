@@ -16,4 +16,6 @@ public interface Conexoes extends JpaRepository<Conexao, Long> {
 	
 	public Optional<Conexao> findByCodigoSenior(Long codigoSenior);
 	
+	
+	
 }
