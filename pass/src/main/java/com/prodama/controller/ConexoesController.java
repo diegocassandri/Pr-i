@@ -248,12 +248,12 @@ public class ConexoesController {
 		conexaoRede.setStatus(StatusConexao.CONECTADO);
 		conexaoRede.setUsuarioLogado((SecurityContextHolder.getContext()).getAuthentication().getName());
 		conexaoRedes.save(conexaoRede);
-		String ip;
+		/*String ip;
 		if(conexaoRede.getTipoBase() == TipoBase.Produção){
 			ip = conexaoRede.getConexao().getIp();
 		} else if(conexaoRede.getTipoBase() == TipoBase.Homologação){
 			ip = conexaoRede.getConexao().getIph();
-		}
+		}*/
 		
 		/*try {
 			Runtime.getRuntime().exec("mstsc.exe /v: " + ip);
@@ -261,7 +261,7 @@ public class ConexoesController {
 			e.printStackTrace();
 		}*/
 		
-		return StatusConexao.CONECTADO.toString();
+		return StatusConexao.CONECTADO.toString() + "-" + (SecurityContextHolder.getContext()).getAuthentication().getName();
 	}
 	
 	@RequestMapping(value = "/conexaoRede/{codigo}/desconectar", method = RequestMethod.PUT)

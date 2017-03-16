@@ -4,5 +4,6 @@ public enum TipoBase {
 	  Produção(),
 	  Homologação,
 	  Desenvolvimento,
+	  VPN,
 	  Outro;
 	}

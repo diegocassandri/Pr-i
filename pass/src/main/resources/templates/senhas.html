@@ -108,7 +108,8 @@ th:id="'myForm' + ${object.id}"-->
 									<span class="fa  fa-trash"> Excluir </span>
 								</a> <br> <br>
 							</div>
-
+							
+							<div class="row">
 							<fieldset>
 								<legend> Dados Gerais </legend>
 								<div class="col-xs-1">
@@ -385,6 +386,9 @@ th:id="'myForm' + ${object.id}"-->
 						var urlConectar = botaoConectar.attr('href');
 						var idBotao = botaoConectar.attr("id");
 						var botaoOn = document.getElementById("ON");
+						var usuario = document.getElementById("usuario");
+						var codigoConexaoRede = botaoConectar.data('codigo');
+
 
 						var response = $.ajax({
 							url : urlConectar,
@@ -392,23 +396,23 @@ th:id="'myForm' + ${object.id}"-->
 						});
 
 						response.done(function(e) {
-							var codigoConexaoRede = botaoConectar
-									.data('codigo');
+							var array = e.split("-");
+							
 							if (idBotao == "ON") {
 								$('[data-role=' + codigoConexaoRede + ']')
-										.html(
-												'<span class="label label-success">'
-														+ e + '</span>');
-								$("#ON").hide;
-								$("#OFF").show;
+										.html('<span class="label label-success">'
+														+ array[0] + '</span>');
+								$('[data-user=' + codigoConexaoRede + ']')
+								.html('<span">'
+										+ array[1] + '</span>');
+				
 							} else {
 								$('[data-role=' + codigoConexaoRede + ']')
 										.html(
 												'<span class="label label-danger">'
-														+ e + '</span>');
+														+ array[0] + '</span>');
 							}
 
-							/*botaoConectar.hide();*/
 						});
 
 						response.fail(function(e) {
