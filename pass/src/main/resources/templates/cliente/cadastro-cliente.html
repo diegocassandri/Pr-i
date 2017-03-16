@@ -39,8 +39,8 @@
 
 			<div class="form-group"
 				th:classappend="${#fields.hasErrors('nome')} ? has-error">
-				<label class="control-label" for="nome">Nome</label> <input
-					id="nome" type="text" class="form-control" th:field="*{nome}" />
+				<label class="control-label" for="nome">Nome</label> <input 
+					id="nome" type="text" class="form-control" th:field="*{nome}" onkeyup="maiuscula(this)"/>
 			</div>
 
 			
@@ -55,6 +55,11 @@
 </section>
 
 <section layout:fragment="javascript-extra">
-	
+	<script>
+	function maiuscula(z){
+        v = z.value.toUpperCase();
+        z.value = v;
+    }
+	</script>
 </section>
 </html>
