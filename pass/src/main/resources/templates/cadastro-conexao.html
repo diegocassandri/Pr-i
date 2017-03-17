@@ -89,15 +89,22 @@
 						</div>
 						<div class="form-group col-sm-12"
 							th:classappend="${#fields.hasErrors('iph')} ? has-error">
-							<label class="control-label" for="ip">IP Homologação: </label>
+							<label class="control-label" for="iph">IP Homologação: </label>
 							<textarea id="ihp" rows="1" class="form-control"
 								th:field="*{iph}"></textarea>
 						</div>
+						<div class="form-group col-sm-12"
+							th:classappend="${#fields.hasErrors('ipVpn')} ? has-error">
+							<label class="control-label" for="ipVpn">IP VPN: </label>
+							<textarea id="ihVpn" rows="1" class="form-control"
+								th:field="*{ipVpn}"></textarea>
+						</div>
 					</div>
+					<div class="col-md-6"></div>
 
 					<div class="col-md-6">
 						<div class="form-group col-sm-12">
-							<label class="control-label" for="tipo"> Usuários</label> <a
+							<label class="control-label" for="tipo"> Usuários:</label> <a
 								class="btn btn-primary btn-xs" style="cursor: pointer"
 								th:href="@{/senhas/conexaoRede/novo}"
 								th:if="${conexao.codigo != null}"> <span class="fa  fa-plus">
@@ -144,69 +151,76 @@
 
 					</div>
 
-
-
-
-
-
-
-
 				</fieldset>
+
+
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<fieldset>
+						<legend> Banco de Dados </legend>
+						<div class="form-group col-sm-6"
+							th:classappend="${#fields.hasErrors('usuarioBd')} ? has-error">
+							<label class="control-label" for="usuarioBd">Usuário
+								Banco de Dados: </label>
+							<textarea id="usuarioBd" rows="2" class="form-control"
+								th:field="*{usuarioBd}"></textarea>
+						</div>
+						<div class="form-group col-sm-6"
+							th:classappend="${#fields.hasErrors('senhaBd')} ? has-error">
+							<label class="control-label" for="ip">Senha Banco de
+								Dados: </label>
+							<textarea id="senhaBd" rows="2" class="form-control"
+								th:field="*{senhaBd}"></textarea>
+						</div>
+					</fieldset>
+				</div>
+				<div class="col-md-6">
+					<fieldset>
+						<legend> Sistema </legend>
+						<div class="form-group col-sm-6"
+							th:classappend="${#fields.hasErrors('usuarioSistema')} ? has-error">
+							<label class="control-label" for="usuarioSistema">Usuário
+								Sistema: </label>
+							<textarea id="usuarioSistema" rows="2" class="form-control"
+								th:field="*{usuarioSistema}"></textarea>
+						</div>
+						<div class="form-group col-sm-6"
+							th:classappend="${#fields.hasErrors('senhaSistema')} ? has-error">
+							<label class="control-label" for="senhaSistema">Senha
+								Sistema: </label>
+							<textarea id="senhaSistema" rows="2" class="form-control"
+								th:field="*{senhaSistema}"></textarea>
+						</div>
+					</fieldset>
+				</div>
 
 
 			</div>
 			<div class="row">
 				<fieldset>
-					<legend> Banco de Dados </legend>
+					<legend> Observações </legend>
 					<div class="form-group col-sm-3"
-						th:classappend="${#fields.hasErrors('usuarioSistema')} ? has-error">
-						<label class="control-label" for="usuarioSistema">Usuário
-							Sistema: </label>
-						<textarea id="usuarioSistema" rows="2" class="form-control"
-							th:field="*{usuarioSistema}"></textarea>
+						th:classappend="${#fields.hasErrors('observacao')} ? has-error">
+						<label class="control-label" for="ip">Observação: </label>
+						<textarea id="observacao" rows="3" class="form-control"
+							th:field="*{observacao}"></textarea>
 					</div>
+
+
 					<div class="form-group col-sm-3"
-						th:classappend="${#fields.hasErrors('senhaSistema')} ? has-error">
-						<label class="control-label" for="senhaSistema">Senha
-							Sistema: </label>
-						<textarea id="senhaSistema" rows="2" class="form-control"
-							th:field="*{senhaSistema}"></textarea>
+						th:classappend="${#fields.hasErrors('permissao')} ? has-error">
+						<label class="control-label" for="tipo">Pedir Permissão: </label>
+						<select id="permissao" class="form-control"
+							th:field="*{permissao}">
+							<option value="">Selecione</option>
+							<option th:each="permissao : ${permissoes}"
+								th:value="${permissao}" th:text="${permissao}"></option>
+						</select>
 					</div>
-					<div class="form-group col-sm-3"
-						th:classappend="${#fields.hasErrors('usuarioBd')} ? has-error">
-						<label class="control-label" for="usuarioBd">Usuário Banco
-							de Dados: </label>
-						<textarea id="usuarioBd" rows="2" class="form-control"
-							th:field="*{usuarioBd}"></textarea>
-					</div>
-					<div class="form-group col-sm-3"
-						th:classappend="${#fields.hasErrors('senhaBd')} ? has-error">
-						<label class="control-label" for="ip">Senha Banco de
-							Dados: </label>
-						<textarea id="senhaBd" rows="2" class="form-control"
-							th:field="*{senhaBd}"></textarea>
-					</div>
+
 				</fieldset>
 
-			</div>
-			<div class="row">
-				<div class="form-group col-sm-3"
-					th:classappend="${#fields.hasErrors('observacao')} ? has-error">
-					<label class="control-label" for="ip">Observação: </label>
-					<textarea id="observacao" rows="3" class="form-control"
-						th:field="*{observacao}"></textarea>
-				</div>
-
-
-				<div class="form-group col-sm-3"
-					th:classappend="${#fields.hasErrors('permissao')} ? has-error">
-					<label class="control-label" for="tipo">Pedir Permissão: </label> <select
-						id="permissao" class="form-control" th:field="*{permissao}">
-						<option value="">Selecione</option>
-						<option th:each="permissao : ${permissoes}"
-							th:value="${permissao}" th:text="${permissao}"></option>
-					</select>
-				</div>
 
 			</div>
 

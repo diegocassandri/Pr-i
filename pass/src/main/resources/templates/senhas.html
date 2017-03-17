@@ -22,8 +22,6 @@ th:id="'myForm' + ${object.id}"-->
 				<div class="col-xs-10">
 					<h1>Senhas Prodama</h1>
 				</div>
-
-
 			</div>
 		</div>
 	</div>
@@ -93,12 +91,12 @@ th:id="'myForm' + ${object.id}"-->
 							</div>
 
 						</div>
-						<div th:id="'detail-' + ${conexao.codigo}" style="display: none;">
+						<div th:id="'detail-' + ${conexao.codigo}" style="display: none">
 							<hr>
 
 							<div class="fluid-row">
 
-								<a class="btn btn-info"
+								<a class="btn btn-primary"
 									th:href="@{/senhas/{codigo}(codigo=${conexao.codigo})}"> <span
 									class="fa  fa-edit"> Editar </span></a> <a class="btn btn-danger"
 									data-toggle="modal" data-target="#confirmaExclusaoModal"
@@ -108,220 +106,231 @@ th:id="'myForm' + ${object.id}"-->
 									<span class="fa  fa-trash"> Excluir </span>
 								</a> <br> <br>
 							</div>
-							
-							<div class="row">
-							<fieldset>
-								<legend> Dados Gerais </legend>
-								<div class="col-xs-1">
-									<i> Código Senior: </i>
-								</div>
-								<div class="col-xs-5">
-									<div class="well">
-										<code th:text="${conexao.codigoSenior}"></code>
+
+							<div class="fluid-row">
+								<fieldset>
+									<legend> Dados Gerais </legend>
+									<div class="col-xs-1">
+										<i> Código Senior: </i>
 									</div>
-								</div>
-
-								<div class="col-xs-1">
-									<i> Nome: </i>
-								</div>
-								<div class="col-xs-5">
-									<div class="well">
-										<code th:text="${conexao.cliente.nome}"></code>
-									</div>
-								</div>
-								<div class="col-xs-1">
-									<i> Tipo Rede: </i>
-								</div>
-								<div class="col-xs-5">
-									<div class="well">
-										<code th:text="${conexao.tipoRede.nome}"></code>
-									</div>
-								</div>
-
-								<div class="col-xs-1">
-									<i> Tipo Conexão: </i>
-								</div>
-								<div class="col-xs-5">
-									<div class="well">
-										<code th:text="${conexao.tipoConexao.nome}"></code>
-									</div>
-								</div>
-							</fieldset>
-							<fieldset>
-								<legend> Conxeão Remota</legend>
-
-								<div class="col-xs-1">
-									<i> IP Produção: </i>
-								</div>
-								<div class="col-xs-5">
-									<div class="well">
-										<a style="cursor: grab" onclick="Executar();">
-											<code th:text="${conexao.ip}"></code>
-
-										</a>
-									</div>
-								</div>
-								<div class="col-xs-1">
-									<i> IP Homologação: </i>
-								</div>
-								<div class="col-xs-5">
-									<div class="well">
-										<a style="cursor: grab">
-											<code th:text="${conexao.iph}"></code>
-
-										</a>
-									</div>
-								</div>
-								<div class="col-xs-1">
-									<i> Usuários: </i>
-								</div>
-								<div class="col-xs-11">
-
-									<div class="well">
-										<div class="table-responsive">
-											<table id="tabela-sistemas"
-												class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
-												<thead class="aw-table-header-solid">
-													<tr>
-														<th>Usuário</th>
-														<th>Senha</th>
-														<th>Base</th>
-														<th>Status</th>
-														<th>Opções</th>
-														<th>Último usuário Logado</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr th:each="conexaoRede : ${conexao.ConexaoRede}">
-
-
-														<td><span th:text="${conexaoRede.usuario}"></span></td>
-														<td><span th:text="${conexaoRede.senha}"></span></td>
-														<td><span th:text="${conexaoRede.tipoBase}"></span></td>
-														<td class="text-center"
-															th:attr="data-role=${conexaoRede.codigo}"><span
-															class="label" th:text="${conexaoRede.status}"
-															th:classappend="${conexaoRede.desconectado ? 'label-danger' : 'label-success'}"></span></td>
-														<td class="text-center"><a
-															class="btn btn-success btn-xs js-atualizar-status"
-															id="ON" title="Conectar" rel="tooltip"
-															data-placement="top"
-															th:attr="data-codigo=${conexaoRede.codigo}"
-														    th:href="@{/senhas/conexaoRede/{codigo}/conectar(codigo=${conexaoRede.codigo})}">
-																<span class="fa  fa-on">ON</span>
-														</a> <a class="btn btn-danger btn-xs js-atualizar-status"
-															id="OFF" title="Desconectar" rel="tooltip"
-															data-placement="top"
-															th:attr="data-codigo=${conexaoRede.codigo}"
-															th:href="@{/senhas/conexaoRede/{codigo}/desconectar(codigo=${conexaoRede.codigo})}">
-																<span class="fa fa-off">OFF</span>
-														</a></td>
-														<td class="text-center"
-															
-															th:attr="data-user=${conexaoRede.codigo}"><span
-															th:text="${conexaoRede.usuarioLogado}"></span></td>
-													</tr>
-													<tr th:if="${conexao.ConexaoRede.empty}">
-														<td colspan="6">Nenhum usuário cadastrado</td>
-													</tr>
-												</tbody>
-											</table>
+									<div class="col-xs-5">
+										<div class="well">
+											<code th:text="${conexao.codigoSenior}"></code>
 										</div>
-
 									</div>
-								</div>
 
-							</fieldset>
-
-							<fieldset>
-								<legend> Dados Sistemas </legend>
-								<div class="col-xs-1">
-									<i> Usuário Sistema: </i>
-								</div>
-								<div class="col-xs-5">
-									<div class="well">
-										<code th:text="${conexao.usuarioSistema}"></code>
+									<div class="col-xs-1">
+										<i> Nome: </i>
 									</div>
-								</div>
-
-								<div class="col-xs-1">
-									<i> Senha Sistema: </i>
-								</div>
-								<div class="col-xs-5">
-									<div class="well">
-										<code th:text="${conexao.senhaSistema}"></code>
-									</div>
-								</div>
-								<div class="col-xs-1">
-									<i> Usuário Banco de Dados: </i>
-								</div>
-								<div class="col-xs-5">
-									<div class="well">
-										<code th:text="${conexao.usuarioBd}"></code>
-									</div>
-								</div>
-
-								<div class="col-xs-1">
-									<i> Senha Banco de Dados: </i>
-								</div>
-								<div class="col-xs-5">
-									<div class="well">
-										<code th:text="${conexao.senhaBd}"></code>
-									</div>
-								</div>
-								<div class="col-xs-1">
-									<i> Versões: </i>
-								</div>
-								<div class="col-xs-5">
-
-									<div class="well">
-										<div class="table-responsive">
-											<table id="tabela-sistemas"
-												class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
-												<thead class="aw-table-header-solid">
-													<tr>
-														<th>Sistema</th>
-														<th>Versão</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr th:each="conexaoCliente : ${conexao.ConexaoCliente}">
-
-
-														<td><span th:text="${conexaoCliente.sistema.nome}"></span></td>
-														<td><span th:text="${conexaoCliente.versao}"></span></td>
-
-													</tr>
-													<tr th:if="${conexao.ConexaoCliente.empty}">
-														<td colspan="4">Nenhum sistema cadastrado</td>
-													</tr>
-												</tbody>
-											</table>
+									<div class="col-xs-5">
+										<div class="well">
+											<code th:text="${conexao.cliente.nome}"></code>
 										</div>
+									</div>
+									<div class="col-xs-1">
+										<i> Tipo Rede: </i>
+									</div>
+									<div class="col-xs-5">
+										<div class="well">
+											<code th:text="${conexao.tipoRede.nome}"></code>
+										</div>
+									</div>
 
+									<div class="col-xs-1">
+										<i> Tipo Conexão: </i>
 									</div>
-								</div>
-							</fieldset>
-							<fieldset>
-								<legend> Observação </legend>
-								<div class="col-xs-1">
-									<i> Pedir Permissão: </i>
-								</div>
-								<div class="col-xs-5">
-									<div class="well">
-										<code th:text="${conexao.permissao}"></code>
+									<div class="col-xs-5">
+										<div class="well">
+											<code th:text="${conexao.tipoConexao.nome}"></code>
+										</div>
 									</div>
-								</div>
+								</fieldset>
+								<fieldset>
+									<legend> Conxeão Remota</legend>
 
-								<div class="col-xs-1">
-									<i> Observações Gerais: </i>
-								</div>
-								<div class="col-xs-5">
-									<div class="well">
-										<code th:text="${conexao.observacao}"></code>
+									<div class="col-xs-1">
+										<i> IP Produção: </i>
 									</div>
-								</div>
-							</fieldset>
+									<div class="col-xs-5">
+										<div class="well">
+											<a style="cursor: grab" onclick="Executar();"> <code
+													th:text="${conexao.ip}"></code>
+
+											</a>
+										</div>
+									</div>
+									<div class="col-xs-1">
+										<i> IP Homologação: </i>
+									</div>
+									<div class="col-xs-5">
+										<div class="well">
+											<a style="cursor: grab"> <code th:text="${conexao.iph}"></code>
+
+											</a>
+										</div>
+									</div>
+
+									<div class="col-xs-1">
+										<i> IP VPN: </i>
+									</div>
+									<div class="col-xs-11">
+										<div class="well">
+											<a style="cursor: grab"> <code th:text="${conexao.ipVpn}"></code>
+
+											</a>
+										</div>
+									</div>
+
+									<div class="col-xs-1">
+										<i> Usuários: </i>
+									</div>
+									<div class="col-xs-11">
+
+										<div class="well">
+											<div class="table-responsive">
+												<table id="tabela-sistemas"
+													class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
+													<thead class="aw-table-header-solid">
+														<tr>
+															<th>Usuário</th>
+															<th>Senha</th>
+															<th>Base</th>
+															<th>Status</th>
+															<th>Opções</th>
+															<th>Último usuário Logado</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr th:each="conexaoRede : ${conexao.ConexaoRede}">
+
+
+															<td><span th:text="${conexaoRede.usuario}"></span></td>
+															<td><span th:text="${conexaoRede.senha}"></span></td>
+															<td><span th:text="${conexaoRede.tipoBase}"></span></td>
+															<td class="text-center"
+																th:attr="data-role=${conexaoRede.codigo}"><span
+																class="label" th:text="${conexaoRede.status}"
+																th:classappend="${conexaoRede.desconectado ? 'label-danger' : 'label-success'}"></span></td>
+															<td class="text-center"><a
+																class="btn btn-success btn-xs js-atualizar-status"
+																id="ON" title="Conectar" rel="tooltip"
+																data-placement="top"
+																th:attr="data-codigo=${conexaoRede.codigo}"
+																th:href="@{/senhas/conexaoRede/{codigo}/conectar(codigo=${conexaoRede.codigo})}">
+																	<span class="fa  fa-on">ON</span>
+															</a> <a class="btn btn-danger btn-xs js-atualizar-status"
+																id="OFF" title="Desconectar" rel="tooltip"
+																data-placement="top"
+																th:attr="data-codigo=${conexaoRede.codigo}"
+																th:href="@{/senhas/conexaoRede/{codigo}/desconectar(codigo=${conexaoRede.codigo})}">
+																	<span class="fa fa-off">OFF</span>
+															</a></td>
+															<td class="text-center"
+																th:attr="data-user=${conexaoRede.codigo}"><span
+																th:text="${conexaoRede.usuarioLogado}"></span></td>
+														</tr>
+														<tr th:if="${conexao.ConexaoRede.empty}">
+															<td colspan="6">Nenhum usuário cadastrado</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+
+										</div>
+									</div>
+
+								</fieldset>
+
+								<fieldset>
+									<legend> Dados Sistemas </legend>
+									<div class="col-xs-1">
+										<i> Usuário Sistema: </i>
+									</div>
+									<div class="col-xs-5">
+										<div class="well">
+											<code th:text="${conexao.usuarioSistema}"></code>
+										</div>
+									</div>
+
+									<div class="col-xs-1">
+										<i> Senha Sistema: </i>
+									</div>
+									<div class="col-xs-5">
+										<div class="well">
+											<code th:text="${conexao.senhaSistema}"></code>
+										</div>
+									</div>
+									<div class="col-xs-1">
+										<i> Usuário Banco de Dados: </i>
+									</div>
+									<div class="col-xs-5">
+										<div class="well">
+											<code th:text="${conexao.usuarioBd}"></code>
+										</div>
+									</div>
+
+									<div class="col-xs-1">
+										<i> Senha Banco de Dados: </i>
+									</div>
+									<div class="col-xs-5">
+										<div class="well">
+											<code th:text="${conexao.senhaBd}"></code>
+										</div>
+									</div>
+									<div class="col-xs-1">
+										<i> Versões: </i>
+									</div>
+									<div class="col-xs-5">
+
+										<div class="well">
+											<div class="table-responsive">
+												<table id="tabela-sistemas"
+													class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
+													<thead class="aw-table-header-solid">
+														<tr>
+															<th>Sistema</th>
+															<th>Versão</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr th:each="conexaoCliente : ${conexao.ConexaoCliente}">
+
+
+															<td><span th:text="${conexaoCliente.sistema.nome}"></span></td>
+															<td><span th:text="${conexaoCliente.versao}"></span></td>
+
+														</tr>
+														<tr th:if="${conexao.ConexaoCliente.empty}">
+															<td colspan="4">Nenhum sistema cadastrado</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+
+										</div>
+									</div>
+								</fieldset>
+								<fieldset>
+									<legend> Observação </legend>
+									<div class="col-xs-1">
+										<i> Pedir Permissão: </i>
+									</div>
+									<div class="col-xs-5">
+										<div class="well">
+											<code th:text="${conexao.permissao}"></code>
+										</div>
+									</div>
+
+									<div class="col-xs-1">
+										<i> Observações Gerais: </i>
+									</div>
+									<div class="col-xs-5">
+										<div class="well">
+											<code th:text="${conexao.observacao}"></code>
+										</div>
+									</div>
+								</fieldset>
+							</div>
 						</div>
 
 					</li>
@@ -377,50 +386,65 @@ th:id="'myForm' + ${object.id}"-->
 	</script>
 	<script>
 		$(function() {
-			$('.js-atualizar-status').on(
-					'click',
-					function(event) {
-						event.preventDefault();
+			$('.js-atualizar-status')
+					.on(
+							'click',
+							function(event) {
+								event.preventDefault();
 
-						var botaoConectar = $(event.currentTarget);
-						var urlConectar = botaoConectar.attr('href');
-						var idBotao = botaoConectar.attr("id");
-						var botaoOn = document.getElementById("ON");
-						var usuario = document.getElementById("usuario");
-						var codigoConexaoRede = botaoConectar.data('codigo');
+								var botaoConectar = $(event.currentTarget);
+								var urlConectar = botaoConectar.attr('href');
+								var idBotao = botaoConectar.attr("id");
+								var botaoOn = document.getElementById("ON");
+								
+								var usuario = document
+										.getElementById("usuario");
+								var codigoConexaoRede = botaoConectar
+										.data('codigo');
+								
 
+								var response = $.ajax({
+									url : urlConectar,
+									type : 'PUT'
+								});
 
-						var response = $.ajax({
-							url : urlConectar,
-							type : 'PUT'
-						});
+								response
+										.done(function(e) {
+											var array = e.split("-");
 
-						response.done(function(e) {
-							var array = e.split("-");
-							
-							if (idBotao == "ON") {
-								$('[data-role=' + codigoConexaoRede + ']')
-										.html('<span class="label label-success">'
-														+ array[0] + '</span>');
-								$('[data-user=' + codigoConexaoRede + ']')
-								.html('<span">'
-										+ array[1] + '</span>');
-				
-							} else {
-								$('[data-role=' + codigoConexaoRede + ']')
-										.html(
-												'<span class="label label-danger">'
-														+ array[0] + '</span>');
-							}
+											if (idBotao == "ON") {
+												$(
+														'[data-role='
+																+ codigoConexaoRede
+																+ ']').html(
+														'<span class="label label-success">'
+																+ array[0]
+																+ '</span>');
+												$(
+														'[data-user='
+																+ codigoConexaoRede
+																+ ']').html(
+														'<span">' + array[1]
+																+ '</span>');
 
-						});
+											} else {
+												$(
+														'[data-role='
+																+ codigoConexaoRede
+																+ ']').html(
+														'<span class="label label-danger">'
+																+ array[0]
+																+ '</span>');
+											}
 
-						response.fail(function(e) {
-							console.log(e);
-							alert('Erro ao Conectar/Desconectar');
-						});
+										});
 
-					});
+								response.fail(function(e) {
+									console.log(e);
+									alert('Erro ao Conectar/Desconectar');
+								});
+
+							});
 		});
 	</script>
 	<script>

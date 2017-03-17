@@ -59,6 +59,9 @@ public class Conexao  implements Serializable{
 	private String usuarioRedeh;
 	private String senhaRedeh;
 	
+	
+	private String ipVpn;
+	
 	private String usuarioSistema;
 	private String senhaSistema;
 	
@@ -154,6 +157,14 @@ public class Conexao  implements Serializable{
 
 	public void setIph(String iph) {
 		this.iph = iph;
+	}
+	
+	public String getIpVpn() {
+		return ipVpn;
+	}
+
+	public void setIpVpn(String ipVpn) {
+		this.ipVpn = ipVpn;
 	}
 
 	public String getUsuarioRedeh() {
