@@ -2,6 +2,7 @@ package com.prodama.config;
 
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,11 +16,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.ldap.DefaultSpringSecurityContextSource;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.prodama.security.UserDetail;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-
+	@Autowired
+	private UserDetail userDetailsService;
 
 
 	@Override
@@ -37,6 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.userSearchFilter("(sAMAccountName={0})")
 		.userDnPatterns("OU=Suporte,DC=prodama,DC=com,DC=br")	
 		 .contextSource(ctx);
+		
+		auth.userDetailsService(userDetailsService)/*.passwordEncoder(passwordEncoder())*/;
+		
+		auth.inMemoryAuthentication()
+		.withUser("prodama").password("asgardia").roles("ADMIN");
 	}
 
 	
