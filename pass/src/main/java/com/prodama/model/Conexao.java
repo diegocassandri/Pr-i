@@ -81,7 +81,7 @@ public class Conexao  implements Serializable{
 	
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	private SimNao permissao;
+	private SimNao permissao;   
 	
 	
 	private String observacao;
