@@ -8,6 +8,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -186,7 +187,7 @@ public class ConexoesController {
 	@GetMapping
 	public ModelAndView pesquisar(ConexaoFilter conexaoFilter) {
 		ModelAndView mv = new ModelAndView("senhas");
-		mv.addObject("conexoes", conexoes.findAll());
+		mv.addObject("conexoes", conexoes.findAll( new Sort("cliente.nome")));
 		return mv;
 	}
 

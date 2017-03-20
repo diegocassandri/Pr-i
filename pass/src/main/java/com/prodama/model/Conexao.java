@@ -51,16 +51,27 @@ public class Conexao  implements Serializable{
 	
 	private String versao;
 	
+	@Column(length = 800)
 	private String ip;
+	
+	@Column(length = 500)
 	private String usuarioRede;
+	
+	@Column(length = 500)
 	private String senhaRede;
 	
+	@Column(length = 800)
 	private String iph;
+	
+	@Column(length = 500)
 	private String usuarioRedeh;
+	
+	@Column(length = 500)
 	private String senhaRedeh;
 	
-	
+	@Column(length = 500)
 	private String ipVpn;
+	
 	
 	private String usuarioSistema;
 	private String senhaSistema;
