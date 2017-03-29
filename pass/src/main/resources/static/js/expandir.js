@@ -16,7 +16,7 @@
 
 				var a = $(this).val();
 
-				if (a.length > 2) {
+				if (a.length >= 1) {
 
 					// this finds all links in the list that contain the input,
 

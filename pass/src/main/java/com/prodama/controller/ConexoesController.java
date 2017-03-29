@@ -101,6 +101,7 @@ public class ConexoesController {
 		}
 
 		try{
+			System.out.println(conexao.getUsuarioBd());
 			cadastroConexao.salvar(conexao);
 		}catch (RuntimeException e){
 			result.rejectValue("codigoSenior", e.getMessage(), e.getMessage());
