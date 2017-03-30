@@ -4,7 +4,6 @@ package com.prodama.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -27,16 +26,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetail userDetailsService;
 
+	@Value("${spring.ldap.base}")
+	private String ldapBase;
+	
+	@Value("${spring.ldap.urls}")
+	private String ldapUrl;
+	
+	@Value("${spring.ldap.username}")
+	private String ldapUser;
+	
+	@Value("${spring.ldap.password}")
+	private String ldapPass;
 	
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		
-		DefaultSpringSecurityContextSource ctx = new DefaultSpringSecurityContextSource("ldap://192.168.7.48:3268/");
-		ctx.setBase("dc=PRODAMA,dc=COM,dc=BR");
+		DefaultSpringSecurityContextSource ctx = new DefaultSpringSecurityContextSource(ldapUrl);
+		ctx.setBase(ldapBase);
 		ctx.afterPropertiesSet();
 		ctx.isAnonymousReadOnly();
-		ctx.setUserDn("CN=Diego Cassandri,OU=Suporte,DC=prodama,DC=com,DC=br");
-		ctx.setPassword("knoppix8860");
+		ctx.setUserDn(ldapUser);
+		ctx.setPassword(ldapPass);
 		
 		auth
 		.ldapAuthentication()
