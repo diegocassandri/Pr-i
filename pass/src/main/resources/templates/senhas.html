@@ -98,8 +98,10 @@ th:id="'myForm' + ${object.id}"-->
 							<div class="fluid-row">
 
 								<a class="btn btn-primary"
-									th:href="@{/senhas/{codigo}(codigo=${conexao.codigo})}"> <span
-									class="fa  fa-edit"> Editar </span></a> <a class="btn btn-danger"
+									th:href="@{/senhas/{codigo}(codigo=${conexao.codigo})}" title="Editar" rel="tooltip"> <span
+									class="fa  fa-edit"> Editar </span></a> 
+									
+									<a class="btn btn-danger"
 									data-toggle="modal" data-target="#confirmaExclusaoModal"
 									data:nome="${conexao.cliente.nome}" title="Excluir"
 									rel="tooltip" data-placement="top"
@@ -401,6 +403,7 @@ th:id="'myForm' + ${object.id}"-->
 	</script>
 	<script>
 		$(function() {
+			$('[rel="tooltip"]').tooltip();
 			$('.js-atualizar-status')
 					.on(
 							'click',
