@@ -19,12 +19,16 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="titulo")
 public class Titulo {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="gen_titulo") 
+	@SequenceGenerator(sequenceName = "seq_titulo", allocationSize = 1, name = "gen_titulo")
 	private Long codigo;
 	
 	@NotEmpty(message = "Descrição é obrigatória")

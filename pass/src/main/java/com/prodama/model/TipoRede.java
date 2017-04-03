@@ -3,6 +3,8 @@ package com.prodama.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.persistence.OneToMany;
 import javax.persistence.Id;
 import java.util.List;
@@ -10,9 +12,11 @@ import javax.persistence.FetchType;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
+@Table(name="tipoRede")
 public class TipoRede {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="gen_tipoRede") 
+	@SequenceGenerator(sequenceName = "seq_tipoRede", allocationSize = 1, name = "gen_tipoRede")
 	private Long codigo;
 	
 	@NotBlank

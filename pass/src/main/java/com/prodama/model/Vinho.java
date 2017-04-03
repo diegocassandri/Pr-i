@@ -7,6 +7,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
@@ -14,10 +16,12 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.NumberFormat;
 
 @Entity
+@Table(name="vinho")
 public class Vinho {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="gen_vinho") 
+	@SequenceGenerator(sequenceName = "seq_vinho", allocationSize = 1, name = "gen_vinho")
 	private Long codigo;
 	
 	@NotBlank

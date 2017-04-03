@@ -4,6 +4,7 @@ package com.prodama.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,7 +17,8 @@ import org.hibernate.validator.constraints.NotBlank;
 public class ConexaoCliente {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="gen_conexaoCliente") 
+	@SequenceGenerator(sequenceName = "seq_conexaoCliente", allocationSize = 1, name = "gen_conexaoCliente")
 	private Long codigo;
 	
 	@NotNull

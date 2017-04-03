@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 import javax.persistence.FetchType;
 import java.util.List;
@@ -27,7 +28,9 @@ public class Conexao  implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	/*@GeneratedValue(strategy = GenerationType.IDENTITY)*/
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="gen_conexao") 
+	@SequenceGenerator(sequenceName = "seq_conexao", allocationSize = 1, name = "gen_conexao")
 	private Long codigo;
 	
 	@NotNull
