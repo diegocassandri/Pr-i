@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout-padrao}"
+	xmlns:data="http://www.thymeleaf.org/extras/data-attribute">
+
+<head>
+<title>PASS - Cadastro de Conexão / Sistema</title>
+</head>
+
+<section layout:fragment="conteudo">
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-10">
+					<h1>Cadastro de Conexão | Sistema</h1>
+				</div>
+
+				<div class="col-xs-2" style="padding-top: 2%">
+					<a class="btn btn-primary" th:href="@{/senhas}"> <i
+						class="fa  fa-search"></i> <span class="hidden-xs  hidden-sm">Voltar</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+
+		<form method="POST" class="form-vertical  js-form-loading"
+			th:object="${conexaoCliente}"
+			th:action="@{/senhas/conexaoSistema/novo}">
+
+			<div layout:insert="~{layout/MensagemGeral}"></div>
+			<div layout:insert="~{layout/MensagemErro}"></div>
+
+			<input type="hidden" th:field="*{codigo}" />
+
+			<div class="row">
+				<div class="form-group col-sm-6"
+					th:classappend="${#fields.hasErrors('conexao')} ? has-error">
+					<label class="control-label" for="cliente">Conexão:</label> <select
+						id="conexao" class="form-control" th:field="*{conexao}">
+						<option value="">Selecione uma conexão</option>
+						<option th:each="conexao : ${conexoes}"
+							th:value="${conexao.codigo}" th:text="${conexao.cliente.nome}"></option>
+					</select>
+				</div>
+				<div class="form-group col-sm-6"
+					th:classappend="${#fields.hasErrors('sistema')} ? has-error">
+					<label class="control-label" for="cliente">Sistema:</label> <select
+						id="sistema" class="form-control" th:field="*{sistema}">
+						<option value="">Selecione um sistema</option>
+						<option th:each="sistema : ${sistemas}"
+							th:value="${sistema.codigo}" th:text="${sistema.nome}"></option>
+					</select>
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="form-group col-sm-6"
+					th:classappend="${#fields.hasErrors('versao')} ? has-error">
+					<label class="control-label" for="ip">Versão: </label>
+					<textarea id="versao" rows="3" class="form-control"
+						th:field="*{versao}"></textarea>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<button class="btn  btn-primary" type="submit">Salvar</button>
+			</div>
+
+		</form>
+	</div>
+
+
+
+
+
+</section>
+
+<section layout:fragment="javascript-extra"></section>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:data="http://www.thymeleaf.org/extras/data-attribute"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout/layout-padrao}">
+<head>
+<title>PASS - Prodama</title>
+
+
+</head>
+
+<!-- th:classappend="${isAdmin} ? adminclass : userclass" 
+th:id="'myForm' + ${object.id}"-->
+
+<section layout:fragment="conteudo">
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-10">
+					<h1>Senhas Prodama</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+
+		<div class="alert  alert-success"
+			th:if="${!#strings.isEmpty(mensagem)}">
+			<span th:text="${mensagem}"></span>
+		</div>
+
+		<form method="GET" class="form-vertical  js-form-loading"
+			th:object="${conexaoFilter}">
+			<div class="form-group" id="custom-search-input">
+				<div class="input-group">
+					<input id="nome" type="text" th:field="*{cliente.nome}"
+						class="form-control filterinput search-query form-control"
+						placeholder="Pesquise pelo nome" autofocus="autofocus" /> <span
+						class="input-group-btn">
+						<button class="btn btn-default" type="submit">
+							<span class="glyphicon  glyphicon-search"></span>
+						</button>
+					</span>
+				</div>
+			</div>
+		</form>
+		<!--  <div class="row">
+			<div id="custom-search-input">
+
+				<div class="input-group col-md-12">
+
+					<input type="text" class="filterinput search-query form-control"
+						placeholder="Procurar" id="procurar" autofocus="">
+
+				</div>
+
+			</div>-->
+
+		<br> <br>
+
+
+
+		<div class="panel panel-default">
+
+			<div class="panel-heading text-center">
+
+				<h3>
+					<strong>Clientes</strong>
+				</h3>
+
+			</div>
+
+
+
+			<div class="panel-body">
+				<ul class="list-group" id="list">
+					<li class="list-group-item" th:each="conexao : ${conexoes}">
+						<div class="row toggle"
+							th:id="'dropdown-detail-' + ${conexao.codigo}"
+							th:data-toggle="'detail-' + ${conexao.codigo}">
+
+							<div class="col-xs-10">
+								<a th:data-toggle="'detail-' + ${conexao.codigo}"
+									style="cursor: pointer" th:text="${conexao.cliente.nome}"></a>
+							</div>
+							<div class="col-xs-2">
+								<i class="fa fa-chevron-down pull-right"></i>
+							</div>
+
+						</div>
+						<div th:id="'detail-' + ${conexao.codigo}" style="display: none">
+							<hr>
+
+							<div class="fluid-row">
+
+								<a class="btn btn-primary"
+									th:href="@{/senhas/{codigo}(codigo=${conexao.codigo})}" title="Editar" rel="tooltip"> <span
+									class="fa  fa-edit"> Editar </span></a> 
+									
+									<a class="btn btn-danger"
+									data-toggle="modal" data-target="#confirmaExclusaoModal"
+									data:nome="${conexao.cliente.nome}" title="Excluir"
+									rel="tooltip" data-placement="top"
+									data:url-apagar="@{/senhas/{codigo}(codigo=${conexao.codigo})}">
+									<span class="fa  fa-trash"> Excluir </span>
+								</a> <br> <br>
+							</div>
+
+							<div class="fluid-row">
+								<fieldset>
+									<legend> Dados Gerais </legend>
+									<div class="col-xs-1">
+										<i> Código Senior: </i>
+									</div>
+									<div class="col-xs-1">
+										<div class="well">
+											<code th:text="${conexao.codigoSenior}"></code>
+										</div>
+									</div>
+
+									<div class="col-xs-1">
+										<i> Nome: </i>
+									</div>
+									<div class="col-xs-3">
+										<div class="well">
+											<code th:text="${conexao.cliente.nome}"></code>
+										</div>
+									</div>
+									<div class="col-xs-1">
+										<i> Tipo Rede: </i>
+									</div>
+									<div class="col-xs-2">
+										<div class="well">
+											<code th:text="${conexao.tipoRede.nome}"></code>
+										</div>
+									</div>
+
+									<div class="col-xs-1">
+										<i> Tipo Conexão: </i>
+									</div>
+									<div class="col-xs-2">
+										<div class="well">
+											<code th:text="${conexao.tipoConexao.nome}"></code>
+										</div>
+									</div>
+								</fieldset>
+								<fieldset>
+									<legend> Conxeão Remota</legend>
+
+									<div class="col-xs-1">
+										<i> IP Produção: </i>
+									</div>
+									<div class="col-xs-5">
+										<div class="well">
+											<textarea rows="2" readonly="readonly" class="form-control"
+												style="color: #B22222; border: 0" th:text="${conexao.ip}"></textarea>
+
+
+										</div>
+									</div>
+									<div class="col-xs-1">
+										<i> IP Homologação: </i>
+									</div>
+									<div class="col-xs-5">
+										<div class="well">
+											<textarea rows="2" readonly="readonly" class="form-control"
+												style="color: #B22222; border: 0" th:text="${conexao.iph}"></textarea>
+
+
+										</div>
+									</div>
+
+									<div class="col-xs-1">
+										<i> IP VPN: </i>
+									</div>
+									<div class="col-xs-11">
+										<div class="well">
+
+											<textarea rows="2" readonly="readonly" class="form-control"
+												style="color: #B22222; border: 0" th:text="${conexao.ipVpn}"></textarea>
+
+										</div>
+									</div>
+
+									<div class="col-xs-1">
+										<i> Usuários: </i>
+									</div>
+									<div class="col-xs-11">
+
+										<div class="well">
+											<div class="table-responsive">
+												<table id="tabela-sistemas"
+													class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
+													<thead class="aw-table-header-solid">
+														<tr>
+															<th>Usuário</th>
+															<th>Senha</th>
+															<th>Base</th>
+															<th>Status</th>
+															<th>Opções</th>
+															<th>Último usuário Logado</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr th:each="conexaoRede : ${conexao.ConexaoRede}">
+
+
+															<td><span th:text="${conexaoRede.usuario}"></span></td>
+															<td><span th:text="${conexaoRede.senha}"></span></td>
+															<td><span th:text="${conexaoRede.tipoBase}"></span></td>
+															<td class="text-center"
+																th:attr="data-role=${conexaoRede.codigo}"><span
+																class="label" th:text="${conexaoRede.status}"
+																th:classappend="${conexaoRede.desconectado ? 'label-danger' : 'label-success'}"></span></td>
+															<td class="text-center"><a
+																class="btn btn-success btn-xs js-atualizar-status"
+																id="ON" title="Conectar" rel="tooltip"
+																data-placement="top"
+																th:attr="data-codigo=${conexaoRede.codigo}"
+																th:href="@{/senhas/conexaoRede/{codigo}/conectar(codigo=${conexaoRede.codigo})}">
+																	<span class="fa  fa-on">ON</span>
+															</a> <a class="btn btn-danger btn-xs js-atualizar-status"
+																id="OFF" title="Desconectar" rel="tooltip"
+																data-placement="top"
+																th:attr="data-codigo=${conexaoRede.codigo}"
+																th:href="@{/senhas/conexaoRede/{codigo}/desconectar(codigo=${conexaoRede.codigo})}">
+																	<span class="fa fa-off">OFF</span>
+															</a></td>
+															<td class="text-center"
+																th:attr="data-user=${conexaoRede.codigo}"><span
+																th:text="${conexaoRede.usuarioLogado}"></span></td>
+														</tr>
+														<tr th:if="${conexao.ConexaoRede.empty}">
+															<td colspan="6">Nenhum usuário cadastrado</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+
+										</div>
+									</div>
+
+								</fieldset>
+
+								<fieldset>
+									<legend> Dados Sistemas </legend>
+									<div class="col-xs-1">
+										<i> Usuário Sistema: </i>
+									</div>
+									<div class="col-xs-5">
+										<div class="well">
+											<textarea rows="3" readonly="readonly" class="form-control"
+												style="color: #B22222; border: 0"
+												th:text="${conexao.usuarioSistema}"></textarea>
+										</div>
+									</div>
+
+									<div class="col-xs-1">
+										<i> Senha Sistema: </i>
+									</div>
+									<div class="col-xs-5">
+										<div class="well">
+											<textarea rows="3" readonly="readonly" class="form-control"
+												style="color: #B22222; border: 0"
+												th:text="${conexao.senhaSistema}"></textarea>
+										</div>
+									</div>
+									<div class="col-xs-1">
+										<i> Usuário Banco de Dados: </i>
+									</div>
+									<div class="col-xs-5">
+										<div class="well">
+											<textarea rows="3" readonly="readonly" class="form-control"
+												style="color: #B22222; border: 0"
+												th:text="${conexao.usuarioBd}"></textarea>
+										</div>
+									</div>
+
+									<div class="col-xs-1">
+										<i> Senha Banco de Dados: </i>
+									</div>
+									<div class="col-xs-5">
+										<div class="well">
+											<textarea rows="3" readonly="readonly" class="form-control"
+												style="color: #B22222; border: 0"
+												th:text="${conexao.senhaBd}"></textarea>
+										</div>
+									</div>
+									<div class="col-xs-1">
+										<i> Versões: </i>
+									</div>
+									<div class="col-xs-5">
+
+										<div class="well">
+											<div class="table-responsive">
+												<table id="tabela-sistemas"
+													class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table">
+													<thead class="aw-table-header-solid">
+														<tr>
+															<th>Sistema</th>
+															<th>Versão</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr th:each="conexaoCliente : ${conexao.ConexaoCliente}">
+
+
+															<td><span th:text="${conexaoCliente.sistema.nome}"></span></td>
+															<td><span th:text="${conexaoCliente.versao}"></span></td>
+
+														</tr>
+														<tr th:if="${conexao.ConexaoCliente.empty}">
+															<td colspan="4">Nenhum sistema cadastrado</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+
+										</div>
+									</div>
+								</fieldset>
+								<fieldset>
+									<legend> Observação </legend>
+									<div class="col-xs-1">
+										<i> Pedir Permissão: </i>
+									</div>
+									<div class="col-xs-5">
+										<div class="well">
+											<textarea rows="2" readonly="readonly" class="form-control"
+												style="color: #B22222; border: 0"
+												th:text="${conexao.permissao}"></textarea>
+										</div>
+									</div>
+
+									<div class="col-xs-1">
+										<i> Observações Gerais: </i>
+									</div>
+									<div class="col-xs-5">
+										<div class="well">
+											<textarea rows="2" readonly="readonly" class="form-control"
+												style="color: #B22222; border: 0"
+												th:text="${conexao.observacao}"></textarea>
+										</div>
+									</div>
+								</fieldset>
+							</div>
+						</div>
+
+					</li>
+				</ul>
+			</div>
+		</div>
+
+
+
+
+
+
+		<div class="modal fade" id="confirmaExclusaoModal" tabindex="-1"
+			data-keyboard="false" data-backdrop="static">
+			<div class="modal-dialog">
+				<form th:attr="data-url-base=@{/senhas}" method="POST">
+					<input type="hidden" name="_method" value="DELETE" />
+
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Você tem certeza?</h4>
+						</div>
+
+						<div class="modal-body">
+							<span>Tem certeza que deseja deletar a conexão?</span>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Cancelar</button>
+							<button type="submit" class="btn btn-danger">Excluir</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+
+	</div>
+</section>
+
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/js/excluir-modal.js}"></script>
+	<script th:src="@{/js/pesquisaSenha.js}"></script>
+	<script th:src="@{/js/expandir.js}"></script>
+
+	<script>
+		$(function() {
+			$('#toggle-conexao').change(function() {
+				$('#console-event').html('Toggle: ' + $(this).prop('checked'))
+			})
+		});
+	</script>
+	<script>
+		$(function() {
+			$('[rel="tooltip"]').tooltip();
+			$('.js-atualizar-status')
+					.on(
+							'click',
+							function(event) {
+								event.preventDefault();
+
+								var botaoConectar = $(event.currentTarget);
+								var urlConectar = botaoConectar.attr('href');
+								var idBotao = botaoConectar.attr("id");
+								var botaoOn = document.getElementById("ON");
+
+								var usuario = document
+										.getElementById("usuario");
+								var codigoConexaoRede = botaoConectar
+										.data('codigo');
+
+								var response = $.ajax({
+									url : urlConectar,
+									type : 'PUT'
+								});
+
+								response
+										.done(function(e) {
+											var array = e.split("-");
+
+											if (idBotao == "ON") {
+												$(
+														'[data-role='
+																+ codigoConexaoRede
+																+ ']').html(
+														'<span class="label label-success">'
+																+ array[0]
+																+ '</span>');
+												$(
+														'[data-user='
+																+ codigoConexaoRede
+																+ ']').html(
+														'<span">' + array[1]
+																+ '</span>');
+
+											} else {
+												$(
+														'[data-role='
+																+ codigoConexaoRede
+																+ ']').html(
+														'<span class="label label-danger">'
+																+ array[0]
+																+ '</span>');
+											}
+
+										});
+
+								response.fail(function(e) {
+									console.log(e);
+									alert('Erro ao Conectar/Desconectar');
+								});
+
+							});
+		});
+	</script>
+	<script>
+		function Executar() {
+			document.location.href = "C:\\Windows\\System32\\mstsc.exe";
+		}
+	</script>
+
+</th:block>
+
+
+</html>
