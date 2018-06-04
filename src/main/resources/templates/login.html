@@ -9,7 +9,7 @@
 <th:block layout:fragment="conteudo">
 	<div class="container" style="padding-top: 10%">
 		<div class="text-center">
-			<img alt="Prodama" th:src="@{/images/logoLogin.jpg}" width="30%"/>
+			<img alt="Senior" th:src="@{/images/Logo-Senior-PNG.png}" width="30%"/>
 		</div>
 		<br>
 		<div class="row">
@@ -25,18 +25,18 @@
 						<form th:action="@{/login}" method="POST" accept-charset="UTF-8">
 							<fieldset>
 								<div class="form-group">
-									<label>Usuário AD:</label> <input class="form-control" type="text"
+									<label>Usuário</label> <input class="form-control" type="text"
 										placeholder="Seu usuário" autofocus="autofocus"
 										name="username" />
 
 								</div>
 								<div class="form-group">
-								<label>Senha:</label>
+								<label>Senha</label>
 									<input class="form-control" placeholder="Sua senha"
 										name="password" type="password" value="">
 								</div>
 
-								<input class="btn btn-lg btn-danger btn-block" type="submit"
+								<input class="btn btn-lg btn-default btn-block" type="submit"
 									value="Entrar">
 							</fieldset>
 						</form>

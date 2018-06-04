@@ -48,16 +48,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		ctx.setUserDn(ldapUser);
 		ctx.setPassword(ldapPass);
 		
-		auth
+		/*auth
 		.ldapAuthentication()
 		.userSearchFilter("(sAMAccountName={0})")
 		.userDnPatterns("OU=Suporte,DC=prodama,DC=com,DC=br")	
-		 .contextSource(ctx);
+		 .contextSource(ctx);*/
 		
 		auth.userDetailsService(userDetailsService)/*.passwordEncoder(passwordEncoder())*/;
 		
 		auth.inMemoryAuthentication()
 		.withUser("prodama").password("asgardia").roles("ADMIN");
+		auth.inMemoryAuthentication()
+		.withUser("senior").password("asgardia").roles("ADMIN");
 	}
 
 	
